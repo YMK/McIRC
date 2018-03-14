@@ -8,5 +8,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js"
+  },
+  "devDependencies": {
+    "stream-replace": "^1.0.0"
   }
 }
