@@ -1,0 +1,9 @@
+{
+  "name": "ircd",
+  "version": "0.1.0",
+  "description": "A node IRCd",
+  "main": "src/index.js",
+  "repository": "https://github.com/McInkay/ircd.git",
+  "author": "Al McKinlay <github@10people.co.uk>",
+  "license": "MIT"
+}
