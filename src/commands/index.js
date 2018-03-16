@@ -1,9 +1,11 @@
-const ping = require("./pong");
 const nick = require("./nick");
+const ping = require("./pong");
+const privmsg = require("./privmsg");
 const user = require("./user");
 
 module.exports = [
-	ping,
 	nick,
+	ping,
+	privmsg,
 	user,
 ];

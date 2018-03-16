@@ -1,7 +1,8 @@
 module.exports = class User {
 
-	constructor(nick, username, hostname, servername, realname) {
+	constructor(nick, client, username, hostname, servername, realname) {
 		this.nick = nick;
+		this.client = client;
 		this.username = username;
 		this.hostname = hostname;
 		this.servername = servername;
@@ -16,5 +17,9 @@ module.exports = class User {
 		this.hostname = hostname || this.hostname;
 		this.servername = servername || this.servername;
 		this.realname = realname || this.realname;
+	}
+
+	sendMessage(from, message) {
+		this.client.sendMessage(from, this.nick, message);
 	}
 };

@@ -1,6 +1,7 @@
 const net = require('net');
 const commands = require('./commands');
 const timeout = require('./utils/timeout');
+const message = require('./enums/messages');
 require('./state');
 
 const server = net.createServer(function(client) {
@@ -43,6 +44,8 @@ const server = net.createServer(function(client) {
 			console.log("Error, no connection anymore");
 		}
 	};
+
+	that.sendMessage = (from, to, messageText) => that.send(`:${from} ${message.PRIVMSG} ${to} :${messageText}`);
 });
 
 server.listen(6667, '127.0.0.1');

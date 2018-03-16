@@ -1,6 +1,7 @@
 module.exports = {
+	NICK: 'NICK',
 	PING: 'PING',
 	PONG: 'PONG',
-	NICK: 'NICK',
+	PRIVMSG: 'PRIVMSG',
 	USER: 'USER',
 };

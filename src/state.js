@@ -10,6 +10,10 @@ class State {
 		}
 		this.users[user.nick] = user;
 	}
+
+	getUser(nick) {
+		return this.users[nick];
+	}
 }
 
 module.exports = new State();
