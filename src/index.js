@@ -1,10 +1,12 @@
 const net = require('net');
 const commands = require('./commands');
 const timeout = require('./utils/timeout');
+require('./state');
 
 const server = net.createServer(function(client) {
+	const that = {};
 	console.log('Client connected');
-	timeout.runTimeout(client);
+	timeout.runTimeout(that);
 
 	client.buffer = '';
 	client.on('data', function (data) {
@@ -20,7 +22,6 @@ const server = net.createServer(function(client) {
 		client.buffer += lines[lines.length - 1];
 	});
 
-
 	client.on('message', (data) => {
 		console.log(`Raw message: ${data}`);
 		const elements = data.split(" ");
@@ -29,10 +30,19 @@ const server = net.createServer(function(client) {
 
 		commands.forEach((command) => {
 			if (command.test(commandName)) {
-				command.run()
+				command.run(that, ...elements.splice(prefix ? 2 : 1))
 			}
 		});
 	});
+
+	that.send = (data) => {
+		console.log(`Raw: sending ${data}`);
+		try {
+			client.write(`${data}\r\n`);
+		} catch (e) {
+			console.log("Error, no connection anymore");
+		}
+	};
 });
 
 server.listen(6667, '127.0.0.1');

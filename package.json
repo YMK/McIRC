@@ -7,7 +7,7 @@
   "author": "Al McKinlay <github@10people.co.uk>",
   "license": "MIT",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node --use_strict src/index.js"
   },
   "devDependencies": {
     "stream-replace": "^1.0.0"
