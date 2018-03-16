@@ -4,12 +4,15 @@ const state = require("../state");
 module.exports = {
 	test: (command) => command === messages.PRIVMSG,
 	run: function (client, toSend) {
-		const message = Array.from(arguments).slice(2).join(" ");
+		let message = Array.from(arguments).slice(2).join(" ");
+		if (message.indexOf(':') === 0) {
+			message = message.slice(1);
+		}
 		console.log(`PRIVMSG to ${toSend} with ${message}`);
 		const to = state.getUser(toSend);
 		if (!to) {
 			return console.log(`${toSend} doesn't exist`);
 		}
-		to.sendMessage(client.user.nick, message.slice(1));
+		to.sendMessage(client.user.nick, message);
 	}
 };
