@@ -7,18 +7,18 @@ module.exports = {
 	run: (client, newNick) => {
 		// TODO check that there isn't a duplicate
 		if (client.user) {
+			const oldNick = client.user.nick;
+			client.user.updateInfo({nick: newNick});
 			if (client.user.nick) {
 				console.log("Updating username");
+				client.send(`:${oldNick} ${messages.NICK} ${newNick}`);
 			} else {
 				console.log("Setting username, user already exists");
-
-
 				client.send(`001 ${client.user.nick} "Welcome to the Internet Relay Network ${client.user.nick}!${client.user.username}@${client.user.hostname}"`);
 				client.send(`002 ${client.user.nick} "Your host is localhost, running version 0.0.1"`);
 				client.send(`003 ${client.user.nick} "This server was created ${(new Date()).toISOString()}"`);
 				client.send(`004 ${client.user.nick} "localhost 0.0.1 o o"`);
 			}
-			client.user.updateInfo({nick: newNick});
 		} else {
 			console.log("Setting username, user doesn't exist yet");
 			const user = new User(newNick, client);
