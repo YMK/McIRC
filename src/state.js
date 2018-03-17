@@ -11,6 +11,11 @@ class State {
 		this.users[user.nick] = user;
 	}
 
+	changeUserNick(oldNick, newNick) {
+		this.users[newNick] = this.users[oldNick];
+		delete this.users[oldNick];
+	}
+
 	getUser(nick) {
 		return this.users[nick];
 	}

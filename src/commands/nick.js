@@ -11,6 +11,7 @@ module.exports = {
 			client.user.updateInfo({nick: newNick});
 			if (client.user.nick) {
 				console.log("Updating username");
+				state.changeUserNick(oldNick, newNick);
 				client.send(`:${oldNick} ${messages.NICK} ${newNick}`);
 			} else {
 				console.log("Setting username, user already exists");
