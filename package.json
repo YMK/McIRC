@@ -7,9 +7,13 @@
   "author": "Al McKinlay <github@10people.co.uk>",
   "license": "MIT",
   "scripts": {
-    "start": "node --use_strict src/index.js"
+    "lint": "eslint .",
+    "start": "node --use_strict src/index.js",
+    "test": "jest"
   },
   "devDependencies": {
+    "eslint": "^4.19.0",
+    "jest": "^22.4.3",
     "stream-replace": "^1.0.0"
   }
 }
