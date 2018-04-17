@@ -1,3 +1,5 @@
+const Message = require('./message');
+
 module.exports = class User {
 
 	constructor(nick, client, username, hostname, servername, realname) {
@@ -19,7 +21,13 @@ module.exports = class User {
 		this.realname = realname || this.realname;
 	}
 
-	sendMessage(from, message) {
-		this.client.sendMessage(from, this.nick, message);
+	sendMessage(from, messageText) {
+		const message = Message.Builder()
+			.withCommand(Message.Command.PRIVMSG)
+			.withSource(from)
+			.withParameter(this.nick)
+			.withParameter(messageText)
+			.build();
+		this.client.sendMessage(message);
 	}
 };

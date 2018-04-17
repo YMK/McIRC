@@ -1,4 +1,4 @@
-const messages = require('../enums/messages');
+const Message = require('../models/message');
 
 module.exports = {
 	waitingForResponse: false,
@@ -10,7 +10,7 @@ module.exports = {
 				console.log("Error: Ping timeout");
 			} else {
 				this.waitingForResponse = true;
-				client.send(`${messages.PING} localhost`);
+				client.send(`${Message.Command.PING} localhost`);
 			}
 		}, this.timeoutTime);
 	},

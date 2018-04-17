@@ -1,9 +1,10 @@
-const messages = require("../enums/messages");
+const Message = require("../models/message");
 const state = require("../state");
 const User = require("../models/user");
+const welcome = require("../utils/welcome");
 
 module.exports = {
-	test: (command) => command === messages.USER,
+	test: (command) => command === Message.Command.USER,
 	run: (client, username, hostname, servername, realname) => {
 		// TODO check that there isn't a duplicate
 		if (!client.user) {
@@ -14,11 +15,7 @@ module.exports = {
 		} else {
 			console.log("User set, already got nick");
 			client.user.updateInfo({username, hostname, servername, realname});
-
-			client.send(`001 ${client.user.nick} "Welcome to the Internet Relay Network ${client.user.nick}!${client.user.username}@${client.user.hostname}"`);
-			client.send(`002 ${client.user.nick} "Your host is localhost, running version 0.0.1"`);
-			client.send(`003 ${client.user.nick} "This server was created ${(new Date()).toISOString()}"`);
-			client.send(`004 ${client.user.nick} "localhost 0.0.1 o o"`);
+			welcome(client);
 		}
 	}
 };

@@ -1,8 +1,8 @@
-const messages = require("../enums/messages");
+const Message = require("../models/message");
 const state = require("../state");
 
 module.exports = {
-	test: (command) => command === messages.PRIVMSG,
+	test: (command) => command === Message.Command.PRIVMSG,
 	run: function (client, toSend) {
 		let message = Array.from(arguments).slice(2).join(" ");
 		if (message.indexOf(':') === 0) {

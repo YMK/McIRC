@@ -1,8 +1,11 @@
-const messages = require("../enums/messages");
+const Message = require("../models/message");
 
 module.exports = {
-	test: (command) => command === messages.PING,
+	test: (command) => command === Message.Command.PING,
 	run: (client, clientName) => {
-		client.send(`${messages.PONG} ${clientName}`);
+		client.send(Message.Builder()
+			.withCommand(Message.Command.PONG)
+			.withParameter(clientName)
+			.build());
 	}
 };

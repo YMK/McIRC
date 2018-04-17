@@ -1,6 +1,5 @@
 const commands = require('./commands');
 const timeout = require('./utils/timeout');
-const message = require('./enums/messages');
 
 module.exports = class ClientManager {
 
@@ -32,23 +31,24 @@ module.exports = class ClientManager {
 
 			commands.forEach((command) => {
 				if (command.test(commandName)) {
+					// TODO: support `:` param
+
+					// TODO: strip out source (and then support later)
+
+					// TODO: strip out tags (and then support later)
 					command.run(that, ...elements.splice(prefix ? 2 : 1))
 				}
 			});
 		});
 	}
 
-	send(data) {
-		console.log(`Raw: sending ${data}`);
+	send(message) {
+		console.log(`Raw: sending ${message.getMessageString()}`);
 		try {
-			this.client.write(`${data}\r\n`);
+			this.client.write(`${message.getMessageString()}\r\n`);
 		} catch (e) {
 			console.log("Error, no connection anymore");
 		}
-	}
-
-	sendMessage(from, to, messageText) {
-		this.send(`:${from} ${message.PRIVMSG} ${to} :${messageText}`);
 	}
 
 };
