@@ -12,7 +12,7 @@ module.exports = class ClientManager {
 		timeout.runTimeout(that);
 
 		client.on('data', function (data) {
-			const lines = data.toString().split(/\n|\r/);
+			const lines = data.toString().split(/[\n\r]/);
 			let i, line;
 
 			for (i = 0; i < lines.length - 1; i += 1) {
@@ -41,14 +41,14 @@ module.exports = class ClientManager {
 	send(data) {
 		console.log(`Raw: sending ${data}`);
 		try {
-			client.write(`${data}\r\n`);
+			this.client.write(`${data}\r\n`);
 		} catch (e) {
 			console.log("Error, no connection anymore");
 		}
 	}
 
 	sendMessage(from, to, messageText) {
-		that.send(`:${from} ${message.PRIVMSG} ${to} :${messageText}`);
+		this.send(`:${from} ${message.PRIVMSG} ${to} :${messageText}`);
 	}
 
 };
