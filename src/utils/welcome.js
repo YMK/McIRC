@@ -23,6 +23,6 @@ module.exports = (client) => {
 	client.send(Message.Builder()
 		.withCommand(Message.Command.RPL_MYINFO)
 		.withParameter(client.user.nick)
-		.withParameter(`localhost 0.0.1 o o`)
+		.withParameter("localhost 0.0.1 o o")
 		.build());
 };

@@ -241,7 +241,7 @@
         "prefer-spread": "error",
         "prefer-template": "error",
         "quote-props": "off",
-        "quotes": "off",
+        "quotes": "error",
         "radix": "error",
         "require-await": "error",
         "require-jsdoc": "error",

@@ -1,4 +1,4 @@
-const Message = require('./message');
+const Message = require("./message");
 
 module.exports = class User {
 

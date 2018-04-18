@@ -54,17 +54,17 @@ class Message {
 
 Message.Command = {
 	// Messages
-	NICK: 'NICK',
-	PING: 'PING',
-	PONG: 'PONG',
-	PRIVMSG: 'PRIVMSG',
-	USER: 'USER',
+	NICK: "NICK",
+	PING: "PING",
+	PONG: "PONG",
+	PRIVMSG: "PRIVMSG",
+	USER: "USER",
 
 	// Numerics
-	RPL_WELCOME: '001',
-	RPL_YOURHOST: '002',
-	RPL_CREATED: '003',
-	RPL_MYINFO: '004'
+	RPL_WELCOME: "001",
+	RPL_YOURHOST: "002",
+	RPL_CREATED: "003",
+	RPL_MYINFO: "004"
 };
 
 module.exports = Message;
