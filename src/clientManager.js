@@ -30,7 +30,7 @@ module.exports = class ClientManager {
 			const commandName = prefix ? elements[1] : elements[0];
 
 			commands.forEach((command) => {
-				if (command.test(commandName)) {
+				if (command.test(commandName.toUpperCase())) {
 					// TODO: support `:` param
 
 					// TODO: strip out source (and then support later)
