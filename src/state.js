@@ -2,6 +2,7 @@ class State {
 
 	constructor() {
 		this.users = {};
+		this.channels = {};
 	}
 
 	addUser(user) {
@@ -11,13 +12,20 @@ class State {
 		this.users[user.nick] = user;
 	}
 
+	addChannel(channel) {
+		if (!channel || !channel.name) {
+			return;
+		}
+		this.channels[channel.name] = channel;
+	}
+
 	changeUserNick(oldNick, newNick) {
 		this.users[newNick] = this.users[oldNick];
 		delete this.users[oldNick];
 	}
 
-	getUser(nick) {
-		return this.users[nick];
+	get(nick) {
+		return this.users[nick] || this.channels[nick];
 	}
 }
 

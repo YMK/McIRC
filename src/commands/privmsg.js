@@ -9,7 +9,7 @@ module.exports = {
 			message = message.slice(1);
 		}
 		console.log(`PRIVMSG to ${toSend} with ${message}`);
-		const to = state.getUser(toSend);
+		const to = state.get(toSend);
 		if (!to) {
 			return console.log(`${toSend} doesn't exist`);
 		}

@@ -39,6 +39,9 @@ class Message {
 			}
 
 			withParameter(parameter) {
+				if (parameter.includes(" ")) {
+					parameter = `:${parameter}`;
+				}
 				this.parameters = this.parameters || [];
 				this.parameters.push(parameter);
 
@@ -54,6 +57,7 @@ class Message {
 
 Message.Command = {
 	// Messages
+	JOIN: "JOIN",
 	NICK: "NICK",
 	PING: "PING",
 	PONG: "PONG",
