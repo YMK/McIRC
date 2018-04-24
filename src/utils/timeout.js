@@ -10,7 +10,10 @@ module.exports = {
 				console.log("Error: Ping timeout");
 			} else {
 				this.waitingForResponse = true;
-				client.send(`${Message.Command.PING} localhost`);
+				client.send(Message.Builder()
+					.withCommand(Message.Command.PING)
+					.withParameter("localhost")
+					.build());
 			}
 		}, this.timeoutTime);
 	},

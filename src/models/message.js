@@ -23,7 +23,7 @@ class Message {
 	}
 
 	static Builder() {
-		return class Builder {
+		return new class Builder {
 			// TODO: fromString(commandstring) {
 
 			withCommand(command) {
