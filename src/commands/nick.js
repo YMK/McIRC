@@ -18,7 +18,11 @@ module.exports = {
 					.withSource(oldNick)
 					.withParameter(newNick)
 					.build());
-				client.send(`:${oldNick} ${Message.Command.NICK} ${newNick}`);
+				client.send(Message.Builder()
+					.withCommand(Message.Command.NICK)
+					.withSource(oldNick)
+					.withParameter(newNick)
+					.build());
 			} else {
 				console.log("Setting username, user already exists");
 				welcome(client);
