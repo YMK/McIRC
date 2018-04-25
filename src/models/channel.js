@@ -17,6 +17,10 @@ module.exports = class Channel {
 		this.users.splice(this.users.indexOf(user), 1);
 	}
 
+	getUsers() {
+		return this.users;
+	}
+
 	sendMessage(from, messageText) {
 		let message;
 		if (typeof  messageText === "string") {
