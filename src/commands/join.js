@@ -9,8 +9,9 @@ module.exports = {
 	run: (client, chan) => {
 		// TODO: I dunno...support multiple channels
 		// TODO: Support keys
-		console.log(`${client.user.nick} wants to join ${chan}`);
-		// Create channel if it doesn't exist
+		if (!chan) {
+			return client.send(Message.Builder().withCommand(Message.Command.ERR_NEEDMOREPARAMS).build());
+		}
 		let channel = state.channels[chan];
 		if (!channel) {
 			channel = new Channel(chan, client.user);

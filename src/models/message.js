@@ -71,6 +71,7 @@ Message.Command = {
 	RPL_MYINFO: "004"
 	ERR_NONICKNAMEGIVEN: '431',
 	ERR_NICKNAMEINUSE: '433',
+	ERR_NEEDMOREPARAMS: '461',
 };
 
 module.exports = Message;
