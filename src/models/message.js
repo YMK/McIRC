@@ -69,6 +69,8 @@ Message.Command = {
 	RPL_YOURHOST: "002",
 	RPL_CREATED: "003",
 	RPL_MYINFO: "004"
+	ERR_NONICKNAMEGIVEN: '431',
+	ERR_NICKNAMEINUSE: '433',
 };
 
 module.exports = Message;

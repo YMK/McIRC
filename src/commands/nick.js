@@ -6,9 +6,23 @@ const welcome = require("../utils/welcome");
 module.exports = {
 	test: (command) => command === Message.Command.NICK,
 	run: (client, newNick) => {
-		// TODO check that there isn't a duplicate
+		if (!newNick) {
+			client.send(Message.Builder()
+				.withCommand(Message.Command.ERR_NONICKNAMEGIVEN)
+				.withParameter("No nickname given")
+				.build());
+		}
+		// TODO: ERR_ERRONEUSNICKNAME
 		if (client.user) {
 			const oldNick = client.user.nick;
+			if (state.get(newNick)) {
+				return client.send(Message.Builder()
+					.withCommand(Message.Command.ERR_NICKNAMEINUSE)
+					.withParameter(oldNick)
+					.withParameter(newNick)
+					.withParameter("Nickname is already in use")
+					.build());
+			}
 			client.user.updateInfo({nick: newNick});
 			if (client.user.nick) {
 				console.log("Updating username");
@@ -23,6 +37,7 @@ module.exports = {
 					.withSource(oldNick)
 					.withParameter(newNick)
 					.build());
+				// TODO: Send to all channels that user is in
 			} else {
 				console.log("Setting username, user already exists");
 				welcome(client);
