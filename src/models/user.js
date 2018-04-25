@@ -9,8 +9,17 @@ module.exports = class User {
 		this.hostname = hostname;
 		this.servername = servername;
 		this.realname = realname;
+		this.channels = [];
 		this.registered = false;
 		this.modes = [];
+	}
+
+	addChannel(chan) {
+		this.channels.push(chan);
+	}
+
+	getChannels() {
+		return this.channels;
 	}
 
 	updateInfo({nick, username, hostname, servername, realname}) {

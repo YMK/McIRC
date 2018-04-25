@@ -27,17 +27,14 @@ module.exports = {
 			if (client.user.nick) {
 				console.log("Updating username");
 				state.changeUserNick(oldNick, newNick);
-				client.send(Message.Builder()
+				const nickMessage = Message.Builder()
 					.withCommand(Message.Command.NICK)
 					.withSource(oldNick)
 					.withParameter(newNick)
-					.build());
-				client.send(Message.Builder()
-					.withCommand(Message.Command.NICK)
-					.withSource(oldNick)
-					.withParameter(newNick)
-					.build());
-				// TODO: Send to all channels that user is in
+					.build();
+				client.send(nickMessage);
+
+				client.user.getChannels().forEach((chan) => chan.sendMessage(newNick, nickMessage));
 			} else {
 				console.log("Setting username, user already exists");
 				welcome(client);

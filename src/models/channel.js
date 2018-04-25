@@ -18,12 +18,17 @@ module.exports = class Channel {
 	}
 
 	sendMessage(from, messageText) {
-		const message = Message.Builder()
-			.withCommand(Message.Command.PRIVMSG)
-			.withSource(from)
-			.withParameter(this.name)
-			.withParameter(messageText)
-			.build();
+		let message;
+		if (typeof  messageText === "string") {
+			message = Message.Builder()
+				.withCommand(Message.Command.PRIVMSG)
+				.withSource(from)
+				.withParameter(this.name)
+				.withParameter(messageText)
+				.build();
+		} else {
+			message = messageText;
+		}
 		console.log("sending message");
 		this.users.forEach((user) => (user.nick !== from) && user.client.send(message));
 	}

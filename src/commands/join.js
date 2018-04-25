@@ -13,11 +13,12 @@ module.exports = {
 		// Create channel if it doesn't exist
 		let channel = state.channels[chan];
 		if (!channel) {
-			state.addChannel(new Channel(chan, client.user));
-		} else {
+			channel = new Channel(chan, client.user);
+			state.addChannel(channel);
+		} else { // Check user isn't already in channel
 			channel.addUser(client.user);
 		}
-		client.send(Message.Builder()
+		client.user.addChannel(channel);
 		const joinMessage = Message.Builder()
 			.withSource(client.user.nick)
 			.withCommand(Message.Command.JOIN)
