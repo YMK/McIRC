@@ -18,12 +18,14 @@ module.exports = {
 			channel.addUser(client.user);
 		}
 		client.send(Message.Builder()
+		const joinMessage = Message.Builder()
 			.withSource(client.user.nick)
 			.withCommand(Message.Command.JOIN)
 			.withParameter(chan)
-			.build());
+			.build();
+		client.send(joinMessage);
 
 		// TODO: Send names
-		// TODO: Send join to other users
+		channel.sendMessage(client.user.nick, joinMessage);
 	}
 };
