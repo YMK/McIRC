@@ -9,7 +9,10 @@ module.exports = {
 			.withParameter(`Quit: ${reason}`)
 			.build();
 
-		client.user.getChannels().forEach((chan) => chan.sendMessage(client.user.username, quitMessage));
+		client.user.getChannels().forEach((chan) => {
+			chan.removeUser(client.user);
+			chan.sendMessage(client.user.username, quitMessage);
+		});
 
 		client.disconnected();
 	}
