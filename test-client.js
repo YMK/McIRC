@@ -5,11 +5,12 @@ const client = net.connect({
 });
 const readline = require("readline");
 const rl = readline.createInterface({input: process.stdin, output: process.stdout});
-
-client.write("NICK test\r\n");
-client.write("USER test 0 * :test user\r\n");
-
+const username = process.argv.length > 2 ? process.argv[2] : "test";
 client.setEncoding("utf8");
+
+client.write(`NICK ${username}\r\n`);
+client.write(`USER ${username} localhost * :Real name of user\r\n`);
+
 
 client.on("data", (data) => {
 	console.log(data);
@@ -19,5 +20,6 @@ client.on("data", (data) => {
 });
 
 rl.on("line", (line) => {
+	console.log(`Raw sending: ${line}`);
 	client.write(`${line}\r\n`);
 })
