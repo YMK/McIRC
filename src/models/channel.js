@@ -1,4 +1,4 @@
-const Message = require('./message');
+const Message = require("./message");
 
 module.exports = class Channel {
 
@@ -23,7 +23,7 @@ module.exports = class Channel {
 
 	sendMessage(from, messageText) {
 		let message;
-		if (typeof  messageText === "string") {
+		if (typeof messageText === "string") {
 			message = Message.Builder()
 				.withCommand(Message.Command.PRIVMSG)
 				.withSource(from)
@@ -34,7 +34,7 @@ module.exports = class Channel {
 			message = messageText;
 		}
 		console.log("sending message");
-		this.users.forEach((user) => (user.nick !== from) && user.client.send(message));
+		this.users.forEach((user) => user.nick !== from && user.client.send(message));
 	}
 
 };
