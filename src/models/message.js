@@ -39,11 +39,12 @@ class Message {
 			}
 
 			withParameter(parameter) {
-				if (parameter.includes(" ")) {
-					parameter = `:${parameter}`;
-				}
 				this.parameters = this.parameters || [];
-				this.parameters.push(parameter);
+				if (parameter.includes(" ")) {
+					this.parameters.push(`:${parameter}`);
+				} else {
+					this.parameters.push(parameter);
+				}
 
 				return this;
 			}
@@ -51,7 +52,7 @@ class Message {
 			build() {
 				return new Message(this.command, this.parameters, this.source);
 			}
-		}
+		}()
 	}
 }
 
@@ -72,9 +73,9 @@ Message.Command = {
 	RPL_NAMREPLY: "353",
 	RPL_ENDOFNAMES: "366",
 
-	ERR_NONICKNAMEGIVEN: '431',
-	ERR_NICKNAMEINUSE: '433',
-	ERR_NEEDMOREPARAMS: '461',
+	ERR_NONICKNAMEGIVEN: "431",
+	ERR_NICKNAMEINUSE: "433",
+	ERR_NEEDMOREPARAMS: "461",
 };
 
 module.exports = Message;

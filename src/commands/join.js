@@ -7,8 +7,11 @@ const state = require("../state");
 module.exports = {
 	test: (command) => command === Message.Command.JOIN,
 	run: (client, chan) => {
+
 		// TODO: I dunno...support multiple channels
+
 		// TODO: Support keys
+
 		if (!chan) {
 			return client.send(Message.Builder().withCommand(Message.Command.ERR_NEEDMOREPARAMS).build());
 		}
@@ -16,7 +19,8 @@ module.exports = {
 		if (!channel) {
 			channel = new Channel(chan, client.user);
 			state.addChannel(channel);
-		} else { // Check user isn't already in channel
+		} else {
+			// Check user isn't already in channel
 			channel.addUser(client.user);
 		}
 		client.user.addChannel(channel);
@@ -28,7 +32,7 @@ module.exports = {
 		client.send(joinMessage);
 
 		// TODO: Send names
-		const namelist = channel.getUsers().reduce((total, user) => total + user.nick + " ", "");
+		const namelist = channel.getUsers().reduce((total, user) => `${total + user.nick} `, "");
 		client.send(Message.Builder()
 			.withCommand(Message.Command.RPL_NAMREPLY)
 			.withParameter(client.user.nick)
