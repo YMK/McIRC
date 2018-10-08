@@ -1,10 +1,11 @@
 const Message = require("../models/message");
+let interval;
 
 module.exports = {
 	waitingForResponse: false,
 	timeoutTime: 30 * 1000,
 	runTimeout: function (client) {
-		const interval = setInterval(() => {
+		interval = setInterval(() => {
 			if (this.waitingForResponse) {
 				clearInterval(interval);
 				console.log("Error: Ping timeout");
@@ -17,7 +18,10 @@ module.exports = {
 			}
 		}, this.timeoutTime);
 	},
-	clearTimeout: function () {
+	receivedPong: function () {
 		this.waitingForResponse = false;
+	},
+	clearInterval: function () {
+		clearInterval(interval);
 	}
 };

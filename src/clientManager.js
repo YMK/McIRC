@@ -51,4 +51,10 @@ module.exports = class ClientManager {
 		}
 	}
 
+	disconnected() {
+		console.log(`User ${this.user ? this.user.username : "unknown"} disconnected`);
+		timeout.clearInterval();
+		this.connected = false;
+	}
+
 };
