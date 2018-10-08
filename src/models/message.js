@@ -63,6 +63,7 @@ Message.Command = {
 	PING: "PING",
 	PONG: "PONG",
 	PRIVMSG: "PRIVMSG",
+	QUIT: "QUIT",
 	USER: "USER",
 
 	// Numerics

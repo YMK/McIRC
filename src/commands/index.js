@@ -4,5 +4,6 @@ module.exports = [
 	require("./ping"),
 	require("./pong"),
 	require("./privmsg"),
+	require("./quit"),
 	require("./user"),
 ];
