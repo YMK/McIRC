@@ -24,7 +24,7 @@ module.exports = class ClientManager {
 		});
 
 		client.on("message", (data) => {
-			console.log(`Raw message: ${data}`);
+			console.log(`Raw received: ${data}`);
 			const elements = data.split(" ");
 			const prefix = elements[0].indexOf(":") === 0 ? elements[0] : null;
 			const commandName = prefix ? elements[1] : elements[0];
@@ -43,7 +43,7 @@ module.exports = class ClientManager {
 	}
 
 	send(message) {
-		console.log(`Raw: sending ${message.getMessageString()}`);
+		console.log(`Raw sending: ${message.getMessageString()}`);
 		try {
 			this.client.write(`${message.getMessageString()}\r\n`);
 		} catch (e) {
