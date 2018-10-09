@@ -5,30 +5,18 @@ module.exports = {
 	test: (command) => command === Message.Command.PART,
 	run: (client, chanlist, reason) => {
 		if (!chanlist) {
-			return client.send(Message.Builder()
-				.withCommand(Message.Command.ERR_NEEDMOREPARAMS)
-				.withParameter(Message.Command.PART)
-				.withParameter("Not enough parameters")
-				.build());
+			return Message.makeNumeric(Message.Command.ERR_NEEDMOREPARAMS, Message.Command.PART, client.user.nick);
 		}
 
 		chanlist.split(",").forEach((chan) => {
 			const to = state.get(chan);
 
 			if (!to) {
-				return client.send(Message.Builder()
-					.withCommand(Message.Command.ERR_NOSUCHCHANNEL)
-					.withParameter(Message.Command.PART)
-					.withParameter("No such channel")
-					.build());
+				return Message.makeNumeric(Message.Command.ERR_NOSUCHCHANNEL, chan, client.user.nick);
 			}
 
 			if (!to.getUsers().includes(client.user)) {
-				return client.send(Message.Builder()
-					.withCommand(Message.Command.ERR_NOTONCHANNEL)
-					.withParameter(Message.Command.PART)
-					.withParameter("You're not on that channel")
-					.build());
+				return Message.makeNumeric(Message.Command.ERR_NOTONCHANNEL, chan, client.user.nick);
 			}
 
 			const partMessage = Message.Builder()

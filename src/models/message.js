@@ -7,6 +7,15 @@ class Message {
 
 		// TODO: Error if we have spaces in anything other than the last (and prepend it with ":" if we do)
 		this.parameters = parameters || [];
+		this.parameters = this.parameters.map((parameter, index) => {
+			if (parameter.includes(" ") && index === this.parameters.length - 1) {
+				return `:${parameter}`;
+			} else if (parameter.includes(" ")) {
+				throw new Error("Only final parameter can include spaces");
+			} else {
+				return parameter;
+			}
+		});
 	}
 
 	getMessageString() {
@@ -20,6 +29,17 @@ class Message {
 		string += `${this.command} ${this.parameters.join(" ")}`.trim();
 
 		return string;
+	}
+
+	static makeNumeric(numeric, command, username) {
+		const message = this.NumericMessage[numeric];
+		const params = [username];
+		if (command) {
+			params.push(command);
+		}
+		params.push(message)
+
+		return new Message(numeric, params);
 	}
 
 	static Builder() {
@@ -84,5 +104,16 @@ Message.Command = {
 	ERR_NOTONCHANNEL: "442",
 	ERR_NEEDMOREPARAMS: "461",
 };
+
+Message.NumericMessage = {
+	[Message.Command.ERR_NOSUCHNICK]: "No such nick/channel",
+	[Message.Command.ERR_NOSUCHCHANNEL]: "No such channel",
+	[Message.Command.ERR_NORECIPIENT]: "No recipient given",
+	[Message.Command.ERR_NOTEXTTOSEND]: "No text to send",
+	[Message.Command.ERR_NONICKNAMEGIVEN]: "No nickname given",
+	[Message.Command.ERR_NICKNAMEINUSE]: "Nickname is already in use",
+	[Message.Command.ERR_NOTONCHANNEL]: "You're not on that channel",
+	[Message.Command.ERR_NEEDMOREPARAMS]: "Not enough parameters",
+}
 
 module.exports = Message;

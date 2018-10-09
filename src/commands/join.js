@@ -13,11 +13,7 @@ module.exports = {
 		// TODO: Support keys (ERR_BADCHANNELKEY)
 
 		if (!chan) {
-			return client.send(Message.Builder()
-				.withCommand(Message.Command.ERR_NEEDMOREPARAMS)
-				.withParameter(Message.Command.JOIN)
-				.withParameter("Not enough parameters")
-				.build());
+			return Message.makeNumeric(Message.Command.ERR_NEEDMOREPARAMS, Message.Command.JOIN, client.user.nick);
 		}
 		let channel = state.get(chan);
 		if (!channel) {
