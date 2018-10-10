@@ -26,5 +26,5 @@ module.exports = (client) => {
 		.withParameter("localhost 0.0.1 o o")
 		.build());
 
-	client.send(Message.makeISupport());
+	client.send(Message.makeISupport(client.user.nick));
 };
