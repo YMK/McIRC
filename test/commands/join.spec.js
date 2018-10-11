@@ -35,6 +35,13 @@ test("Doesn't create new channel if it already exists", () => {
     expect(state.channels["#test"]).toBe(existingChan);
 });
 
+test("Creates multiple new channels", () => {
+    expect(state.channels).toEqual({});
+    const chanlist = "#test,#cheese,#hello";
+    tested.run(new mockClient(), chanlist);
+
+    expect(Object.keys(state.channels).length).toBe(3);
+});
 test("Adds user to existing channel if already exists", () => {
     expect(state.channels).toEqual({});
     const existingUser = new user("owner", {send: jest.fn()}, "owner", "localhost", "", "");
