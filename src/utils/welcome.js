@@ -10,7 +10,7 @@ module.exports = (client) => {
 	client.send(Message.Builder()
 		.withCommand(Message.Command.RPL_WELCOME)
 		.withParameter(client.user.nick)
-		.withParameter(`${WELCOME} ${client.user.nick}!${client.user.username}@${client.user.hostname}`)
+		.withParameter(`${WELCOME} ${client.user.getHostMask()}`)
 		.build());
 	client.send(Message.Builder()
 		.withCommand(Message.Command.RPL_YOURHOST)
