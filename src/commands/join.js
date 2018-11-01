@@ -11,7 +11,7 @@ module.exports = {
 		// TODO: Support keys (ERR_BADCHANNELKEY)
 
 		if (!chanlist) {
-			return Message.makeNumeric(Message.Command.ERR_NEEDMOREPARAMS, Message.Command.JOIN, client.user.nick);
+			return client.send(Message.makeNumeric(Message.Command.ERR_NEEDMOREPARAMS, Message.Command.JOIN, client.user.nick));
 		}
 
 		chanlist.split(",").forEach((chanName) => {
