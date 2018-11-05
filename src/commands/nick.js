@@ -7,13 +7,13 @@ module.exports = {
 	test: (command) => command === Message.Command.NICK,
 	run: (client, newNick) => {
 		if (!newNick) {
-			return Message.makeNumeric(Message.Command.ERR_NONICKNAMEGIVEN, undefined, client.user.nick);
+			return client.send(Message.makeNumeric(Message.Command.ERR_NONICKNAMEGIVEN, undefined, client.user.nick));
 		}
 		// TODO: ERR_ERRONEUSNICKNAME
 		if (client.user) {
 			const oldNick = client.user.nick;
 			if (state.get(newNick)) {
-				return Message.makeNumeric(Message.Command.ERR_NICKNAMEINUSE, newNick, client.user.nick);
+				return client.send(Message.makeNumeric(Message.Command.ERR_NICKNAMEINUSE, newNick, client.user.nick));
 			}
 			client.user.updateInfo({nick: newNick});
 			if (client.user.nick) {

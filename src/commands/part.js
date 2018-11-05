@@ -5,18 +5,18 @@ module.exports = {
 	test: (command) => command === Message.Command.PART,
 	run: (client, chanlist, reason) => {
 		if (!chanlist) {
-			return Message.makeNumeric(Message.Command.ERR_NEEDMOREPARAMS, Message.Command.PART, client.user.nick);
+			return client.send(Message.makeNumeric(Message.Command.ERR_NEEDMOREPARAMS, Message.Command.PART, client.user.nick));
 		}
 
 		chanlist.split(",").forEach((chan) => {
 			const to = state.get(chan);
 
 			if (!to) {
-				return Message.makeNumeric(Message.Command.ERR_NOSUCHCHANNEL, chan, client.user.nick);
+				return client.send(Message.makeNumeric(Message.Command.ERR_NOSUCHCHANNEL, chan, client.user.nick));
 			}
 
 			if (!to.getUsers().includes(client.user)) {
-				return Message.makeNumeric(Message.Command.ERR_NOTONCHANNEL, chan, client.user.nick);
+				return client.send(Message.makeNumeric(Message.Command.ERR_NOTONCHANNEL, chan, client.user.nick));
 			}
 
 			const partMessage = Message.Builder()
