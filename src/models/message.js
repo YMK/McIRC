@@ -5,15 +5,10 @@ class Message {
 		this.source = source;
 		// TODO: Limit to 15
 
-		// TODO: Error if we have spaces in anything other than the last (and prepend it with ":" if we do)
 		this.parameters = parameters || [];
-		this.parameters = this.parameters.map((parameter, index) => {
-			if (parameter.includes(" ") && index === this.parameters.length - 1) {
-				return `:${parameter}`;
-			} else if (parameter.includes(" ")) {
+		this.parameters.forEach((parameter, index) => {
+			if (parameter.includes(" ") && index !== this.parameters.length - 1) {
 				throw new Error("Only final parameter can include spaces");
-			} else {
-				return parameter;
 			}
 		});
 	}
@@ -26,9 +21,19 @@ class Message {
 		if (this.source) {
 			string += `:${this.source} `
 		}
-		string += `${this.command} ${this.parameters.join(" ")}`.trim();
+		string += this.command;
+		const lastParam = this.parameters[this.parameters.length - 1];
+		if (lastParam) {
+			const lastParamString = lastParam.includes(" ") ? `:${lastParam}` : lastParam;
+			if (this.parameters.length > 1) {
+				const paramString = `${this.parameters.slice(0, -1).join(" ")} ${lastParamString}`;
+				string += ` ${paramString}`;
+			} else {
+				string += ` ${lastParamString}`;
+			}
+		}
 
-		return string;
+		return string.trim();
 	}
 
 	static makeISupport(username) {
@@ -81,6 +86,29 @@ class Message {
 		return new Message(numeric, params);
 	}
 
+	static fromMessageString(user, string) {
+		const elements = string.split(" ");
+
+		const tagString = elements[0].indexOf("@") === 0 ? elements[0] : null;
+		const maybeSource = tagString && elements.length > 1 ? elements[1] : elements[0];
+		const source = maybeSource.indexOf(":") === 0 ? maybeSource.slice(1) : null;
+		const numberPreCommand = Number(Boolean(source)) + Number(Boolean(tagString));
+		const commandName = elements[numberPreCommand];
+		const params = elements.slice(numberPreCommand + 1);
+		const parameters = [];
+		for (let index = 0; index < params.length; index++) {
+			const param = params[index];
+			if (param.includes(":")) {
+				parameters.push(`${param.slice(1)} ${params.slice(index + 1).join(" ")}`);
+				break;
+			} else {
+				parameters.push(param);
+			}
+		}
+
+		return new Message(commandName, parameters, source || user);
+	}
+
 	static Builder() {
 		return new class Builder {
 			// TODO: fromString(commandstring) {
@@ -99,11 +127,7 @@ class Message {
 
 			withParameter(parameter) {
 				this.parameters = this.parameters || [];
-				if (parameter.includes(" ")) {
-					this.parameters.push(`:${parameter}`);
-				} else {
-					this.parameters.push(parameter);
-				}
+				this.parameters.push(parameter);
 
 				return this;
 			}
@@ -124,6 +148,7 @@ Message.Command = {
 	PONG: "PONG",
 	PRIVMSG: "PRIVMSG",
 	QUIT: "QUIT",
+	TOPIC: "TOPIC",
 	USER: "USER",
 	VERSION: "VERSION",
 
@@ -133,6 +158,9 @@ Message.Command = {
 	RPL_CREATED: "003",
 	RPL_MYINFO: "004",
 	RPL_ISUPPORT: "005",
+	RPL_NOTOPIC: "331",
+	RPL_TOPIC: "332",
+	RPL_TOPICWHOTIME: "333",
 	RPL_VERSION: "351",
 	RPL_NAMREPLY: "353",
 	RPL_ENDOFNAMES: "366",
@@ -148,6 +176,7 @@ Message.Command = {
 };
 
 Message.NumericMessage = {
+	[Message.Command.RPL_NOTOPIC]: "No topic is set",
 	[Message.Command.ERR_NOSUCHNICK]: "No such nick/channel",
 	[Message.Command.ERR_NOSUCHCHANNEL]: "No such channel",
 	[Message.Command.ERR_NORECIPIENT]: "No recipient given",

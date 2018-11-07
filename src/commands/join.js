@@ -31,7 +31,16 @@ module.exports = {
 				.build();
 			client.send(joinMessage);
 
-			// TODO: Send topic
+			if (channel.topic) {
+				client.send(Message.Builder()
+					.withCommand(Message.Command.RPL_TOPIC)
+					.withParameter(client.user.nick)
+					.withParameter(channel.name)
+					.withParameter(channel.topic.text)
+					.build());
+			} else {
+				client.send(Message.makeNumeric(Message.Command.RPL_NOTOPIC, chanName, client.user.nick));
+			}
 
 			// TODO: Send names
 			const namelist = channel.getUsers().reduce((total, user) => `${total + user.nick} `, "");

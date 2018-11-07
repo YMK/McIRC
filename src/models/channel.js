@@ -1,4 +1,5 @@
 const Message = require("./message");
+const Topic = require("./topic");
 
 module.exports = class Channel {
 
@@ -6,6 +7,7 @@ module.exports = class Channel {
 		this.name = name;
 		this.users = [owner];
 		this.owner = owner;
+		this.topic = null;
 		this.modes = [];
 	}
 
@@ -19,6 +21,20 @@ module.exports = class Channel {
 
 	getUsers() {
 		return this.users;
+	}
+
+	setTopic(text, author) {
+		if (this.topic) {
+			this.topic.changeTopic(text, author);
+		} else {
+			this.topic = new Topic(text, author);
+		}
+
+return text;
+	}
+
+	clearTopic() {
+		this.topic = null;
 	}
 
 	sendMessage(from, messageText) {
