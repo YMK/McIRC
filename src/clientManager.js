@@ -28,12 +28,29 @@ module.exports = class ClientManager {
 			console.log(`Raw received: ${data}`);
 			const message = Message.fromMessageString(that.client.user ? that.client.user.nick : null, data);
 
+			if (!message.command) {
+				return console.log("Error");
+			}
+
+			let commandRun = false;
 			commands.forEach((command) => {
 				if (command.test(message.command.toUpperCase())) {
-					command.run(that, ...message.parameters)
+					commandRun = true;
+					command.run(that, ...message.parameters);
 				}
 			});
+			if (!commandRun) {
+				that.send(Message.makeNumeric(Message.Command.ERR_UNKNOWNCOMMAND, message.command.toUpperCase(), that.getUserNick()));
+			}
 		});
+	}
+
+	getUserNick() {
+		if (this.client && this.client.user && this.client.user.nick) {
+			return this.client.user.nick;
+		}
+
+		return "";
 	}
 
 	send(message) {
