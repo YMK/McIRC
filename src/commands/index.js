@@ -6,5 +6,6 @@ module.exports = [
 	require("./pong"),
 	require("./privmsg"),
 	require("./quit"),
+	require("./topic"),
 	require("./user"),
 ];

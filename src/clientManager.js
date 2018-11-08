@@ -1,5 +1,6 @@
 const commands = require("./commands");
 const timeout = require("./utils/timeout");
+const Message = require("./models/message");
 
 module.exports = class ClientManager {
 
@@ -25,18 +26,11 @@ module.exports = class ClientManager {
 
 		client.on("message", (data) => {
 			console.log(`Raw received: ${data}`);
-			const elements = data.split(" ");
-			const prefix = elements[0].indexOf(":") === 0 ? elements[0] : null;
-			const commandName = prefix ? elements[1] : elements[0];
+			const message = Message.fromMessageString(that.client.user ? that.client.user.nick : null, data);
 
 			commands.forEach((command) => {
-				if (command.test(commandName.toUpperCase())) {
-					// TODO: support `:` param
-
-					// TODO: strip out source (and then support later)
-
-					// TODO: strip out tags (and then support later)
-					command.run(that, ...elements.splice(prefix ? 2 : 1))
+				if (command.test(message.command.toUpperCase())) {
+					command.run(that, ...message.parameters)
 				}
 			});
 		});

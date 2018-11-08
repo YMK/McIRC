@@ -2,6 +2,7 @@ const tested = require("../../src/commands/join");
 const state = require("../../src/state");
 const user = require("../../src/models/user");
 const Channel = require("../../src/models/channel");
+const utils = require("../utils");
 
 let mockClient, mockSend, newUser;
 
@@ -10,10 +11,7 @@ beforeEach(() => {
     state.channels = {};
     state.users = {};
     mockSend = jest.fn();
-    mockClient = jest.fn().mockImplementation(() => ({
-        user: newUser,
-        send: mockSend
-    }));
+    mockClient = utils.mockClient(newUser, mockSend);
 });
 
 test("Creates channel if it doesn't exist already", () => {
@@ -55,6 +53,33 @@ test("Adds user to existing channel if already exists", () => {
     expect(state.channels["#test"].users[1]).not.toBe(existingUser);
     expect(state.channels["#test"].users[1].nick).toBe("username");
     expect(state.channels["#test"].users[1]).toBe(newUser);
+});
+
+test("Sends topic to user if there is one", () => {
+    expect(state.channels).toEqual({});
+    const existingUser = new user("owner", {send: jest.fn()}, "owner", "localhost", "", "");
+    const existingChan = new Channel("#test", existingUser);
+    existingChan.setTopic("This is the topic", "userThatSetTheTopic")
+    state.channels = {"#test": existingChan};
+    const chanlist = "#test";
+    tested.run(new mockClient(), chanlist);
+
+    const messageString = mockSend.mock.calls[1][0].getMessageString();
+
+    expect(messageString).toBe("332 username #test :This is the topic");
+});
+
+test("Sends notopic to user if there is no topic", () => {
+    expect(state.channels).toEqual({});
+    const existingUser = new user("owner", {send: jest.fn()}, "owner", "localhost", "", "");
+    const existingChan = new Channel("#test", existingUser);
+    state.channels = {"#test": existingChan};
+    const chanlist = "#test";
+    tested.run(new mockClient(), chanlist);
+
+    const messageString = mockSend.mock.calls[1][0].getMessageString();
+
+    expect(messageString).toBe("331 username #test :No topic is set");
 });
 
 test("Adds user to newly created channel", () => {
@@ -99,10 +124,6 @@ test("Sends join message to other users in channel", () => {
     const messageString = existingUserSend.mock.calls[0][0].getMessageString();
 
     expect(messageString).toBe(":username JOIN #test");
-});
-
-test.skip("Sends topic to other users in channel", () => {
-    expect(true).toBe(false);
 });
 
 test.skip("Sends names to user's client", () => {

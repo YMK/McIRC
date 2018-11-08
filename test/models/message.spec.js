@@ -17,6 +17,56 @@ test("Builder exists", () => {
 
 // TODO: Add more tests for builder
 
+describe("From Message String", () => {
+
+	test("with no tags or source", () => {
+		const messageString = "TOPIC #test :This is a test";
+		const message = tested.fromMessageString("username", messageString);
+
+		expect(message.command).toEqual("TOPIC");
+		expect(message.parameters).toEqual([
+"#test",
+"This is a test"
+]);
+	});
+
+	test("with just source", () => {
+		const messageString = ":someothersource TOPIC #test :This is a test";
+		const message = tested.fromMessageString("username", messageString);
+
+		expect(message.command).toEqual("TOPIC");
+		expect(message.parameters).toEqual([
+"#test",
+"This is a test"
+]);
+		expect(message.source).toEqual("someothersource");
+	});
+
+	test("with just tag", () => {
+		const messageString = "@test=123 TOPIC #test :This is a test";
+		const message = tested.fromMessageString("username", messageString);
+
+		expect(message.command).toEqual("TOPIC");
+		expect(message.parameters).toEqual([
+"#test",
+"This is a test"
+]);
+	});
+
+	test("with tag and source", () => {
+		const messageString = "@test=123 :someothersource TOPIC #test :This is a test";
+		const message = tested.fromMessageString("username", messageString);
+
+		expect(message.command).toEqual("TOPIC");
+		expect(message.parameters).toEqual([
+"#test",
+"This is a test"
+]);
+		expect(message.source).toEqual("someothersource");
+	});
+
+});
+
 test("Type exists", () => {
 	expect(tested.Command.NICK).toBe("NICK");
 	expect(tested.Command.RPL_WELCOME).toBe("001");
