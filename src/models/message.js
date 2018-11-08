@@ -6,7 +6,9 @@ class Message {
 		// TODO: Limit to 15
 
 		this.parameters = parameters || [];
-		this.parameters.forEach((parameter, index) => {
+		this.parameters
+			.map((parameter) => parameter || "")
+			.forEach((parameter, index) => {
 			if (parameter.includes(" ") && index !== this.parameters.length - 1) {
 				throw new Error("Only final parameter can include spaces");
 			}
@@ -169,6 +171,7 @@ Message.Command = {
 	ERR_NOSUCHCHANNEL: "403",
 	ERR_NORECIPIENT: "411",
 	ERR_NOTEXTTOSEND: "412",
+	ERR_UNKNOWNCOMMAND: "421",
 	ERR_NONICKNAMEGIVEN: "431",
 	ERR_NICKNAMEINUSE: "433",
 	ERR_NOTONCHANNEL: "442",
@@ -181,6 +184,7 @@ Message.NumericMessage = {
 	[Message.Command.ERR_NOSUCHCHANNEL]: "No such channel",
 	[Message.Command.ERR_NORECIPIENT]: "No recipient given",
 	[Message.Command.ERR_NOTEXTTOSEND]: "No text to send",
+	[Message.Command.ERR_UNKNOWNCOMMAND]: "Unknown command",
 	[Message.Command.ERR_NONICKNAMEGIVEN]: "No nickname given",
 	[Message.Command.ERR_NICKNAMEINUSE]: "Nickname is already in use",
 	[Message.Command.ERR_NOTONCHANNEL]: "You're not on that channel",
