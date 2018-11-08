@@ -63,7 +63,7 @@ class Message {
 			// TODO: Add STATUSMSG= (for supporting sending messages to a prefix on a channel) **REQUIRED**
 			// TODO: Add TOPICLEN=390 (for max topic length) **REQUIRED**
 			.withParameter("USERLEN=31") // TODO: Add this to config
-			.withParameter(":are supported by this server")
+			.withParameter("are supported by this server")
 			.build();
 		/* eslint-enable */
 	}
