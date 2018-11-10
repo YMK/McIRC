@@ -9,10 +9,17 @@ const username = process.argv.length > 2 ? process.argv[2] : "test";
 client.setEncoding("utf8");
 
 client.on("data", (data) => {
-	console.log(data);
-	if (data.startsWith("PING")) {
-		client.write("PONG\r\n");
+	let lines = data.toString().split(/\r\n/);
+	if (lines[lines.length - 1] === "") {
+		lines = lines.slice(0, lines.length - 1);
 	}
+	lines.forEach((line) => {
+		console.log(`Raw Received: ${line}`);
+		if (data.startsWith("PING")) {
+			console.log("Raw sending: PONG");
+			client.write("PONG\r\n")
+		}
+	});
 });
 
 client.write(`NICK ${username}\r\n`);
