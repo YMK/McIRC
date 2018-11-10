@@ -12,11 +12,14 @@ module.exports = class ClientManager {
 		timeout.runTimeout(that);
 
 		client.on("data", function (data) {
-			const lines = data.toString().split(/[\n\r]/);
-			let i, line;
+			let lines = data.toString().split(/\r\n/);
+			if (lines[lines.length - 1] === "") {
+				lines = lines.slice(0, lines.length - 1);
+			}
+			let i;
 
-			for (i = 0; i < lines.length - 1; i += 1) {
-				line = client.buffer + lines[i];
+			for (i = 0; i < lines.length; i += 1) {
+				const line = lines[i];
 				client.buffer = "";
 				client.emit("message", line);
 			}
