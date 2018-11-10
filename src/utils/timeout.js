@@ -1,4 +1,5 @@
 const Message = require("../models/message");
+const logger = require("../utils/logger");
 let interval;
 
 module.exports = {
@@ -8,7 +9,7 @@ module.exports = {
 		interval = setInterval(() => {
 			if (this.waitingForResponse) {
 				clearInterval(interval);
-				console.log("Error: Ping timeout");
+				logger.error("Error: Ping timeout");
 			} else {
 				this.waitingForResponse = true;
 				client.send(Message.Builder()

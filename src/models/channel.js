@@ -49,7 +49,6 @@ return text;
 		} else {
 			message = messageText;
 		}
-		console.log("sending message");
 		this.users.forEach((user) => user.nick !== from && user.client.send(message));
 	}
 
