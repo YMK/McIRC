@@ -2,6 +2,7 @@ const Message = require("../models/message");
 const state = require("../state");
 const User = require("../models/user");
 const welcome = require("../utils/welcome");
+const logger = require("../utils/logger");
 
 module.exports = {
 	test: (command) => command === Message.Command.NICK,
@@ -17,7 +18,7 @@ module.exports = {
 			}
 			client.user.updateInfo({nick: newNick});
 			if (client.user.nick) {
-				console.log("Updating username");
+				logger.debug("Updating username");
 				state.changeUserNick(oldNick, newNick);
 				const nickMessage = Message.Builder()
 					.withCommand(Message.Command.NICK)
@@ -28,11 +29,11 @@ module.exports = {
 
 				client.user.getChannels().forEach((chan) => chan.sendMessage(newNick, nickMessage));
 			} else {
-				console.log("Setting username, user already exists");
+				logger.debug("Setting username, user already exists");
 				welcome(client);
 			}
 		} else {
-			console.log("Setting username, user doesn't exist yet");
+			logger.debug("Setting username, user doesn't exist yet");
 			const user = new User(newNick, client);
 			state.addUser(user);
 			client.user = user;

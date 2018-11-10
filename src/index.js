@@ -1,17 +1,18 @@
 const net = require("net");
 const ClientManager = require("./clientManager");
+const logger = require("./utils/logger");
 require("./state");
 
 const server = net.createServer((client) => {
-    console.log("New connection, creating client");
+    logger.debug("New connection, creating client");
     const clientManager = new ClientManager(client);
     client.on("error", (err) => {
         if (err.code === "ECONNRESET") {
             clientManager.disconnected();
         } else {
-            console.log(err);
+            logger.error(err);
         }
     });
 });
 
-server.listen(6667, "127.0.0.1");
+server.listen(6667, "127.0.0.1", () => logger.info("Server up and running"));

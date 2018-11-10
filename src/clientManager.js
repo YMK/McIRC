@@ -1,6 +1,7 @@
 const commands = require("./commands");
 const timeout = require("./utils/timeout");
 const Message = require("./models/message");
+const logger = require("./utils/logger");
 
 module.exports = class ClientManager {
 
@@ -8,7 +9,7 @@ module.exports = class ClientManager {
 		const that = this;
 		that.client = client;
 		client.buffer = "";
-		console.log("Client connected");
+		logger.debug("Client connected");
 		timeout.runTimeout(that);
 
 		client.on("data", function (data) {
@@ -28,11 +29,11 @@ module.exports = class ClientManager {
 		});
 
 		client.on("message", (data) => {
-			console.log(`Raw received: ${data}`);
+			logger.debug(`Raw received: ${data}`);
 			const message = Message.fromMessageString(that.client.user ? that.client.user.nick : null, data);
 
 			if (!message.command) {
-				return console.log("Error");
+				return logger.error(`Error, no command in message: ${data}`);
 			}
 
 			let commandRun = false;
@@ -57,16 +58,16 @@ module.exports = class ClientManager {
 	}
 
 	send(message) {
-		console.log(`Raw sending: ${message.getMessageString()}`);
+		logger.debug(`Raw sending: ${message.getMessageString()}`);
 		try {
 			this.client.write(`${message.getMessageString()}\r\n`);
 		} catch (e) {
-			console.log("Error, no connection anymore");
+			logger.error("Error, no connection anymore");
 		}
 	}
 
 	disconnected() {
-		console.log(`User ${this.user ? this.user.username : "unknown"} disconnected`);
+		logger.debug(`User ${this.user ? this.user.username : "unknown"} disconnected`);
 		timeout.clearInterval();
 		this.connected = false;
 	}
