@@ -42,21 +42,17 @@ module.exports = {
 				client.send(Message.makeNumeric(Message.Command.RPL_NOTOPIC, chanName, client.user.nick));
 			}
 
-			// TODO: Send names
-			const namelist = channel.getUsers().reduce((total, user) => `${total + user.nick} `, "");
-			client.send(Message.Builder()
-				.withCommand(Message.Command.RPL_NAMREPLY)
-				.withParameter(client.user.nick)
-				.withParameter("=")
-				.withParameter(channel.name)
-				.withParameter(namelist)
-				.build());
-			client.send(Message.Builder()
-				.withCommand(Message.Command.RPL_ENDOFNAMES)
-				.withParameter(client.user.nick)
-				.withParameter(channel.name)
-				.withParameter("End of /NAMES list")
-				.build());
+			channel.getUsers()
+				.forEach((user) => client.send(Message.Builder()
+					.withCommand(Message.Command.RPL_NAMREPLY)
+					.withParameter(client.user.nick)
+					.withParameter("=")
+					.withParameter(channel.name)
+					.withParameter(user.nick)
+					.build()));
+
+			client.send(Message.makeNumeric(Message.Command.RPL_ENDOFNAMES, chanName, client.user.nick));
+
 			channel.sendMessage(client.user.nick, joinMessage);
 		});
 	}

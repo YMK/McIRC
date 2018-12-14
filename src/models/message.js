@@ -5,8 +5,8 @@ class Message {
 	constructor(name, parameters, source) {
 		this.command = name;
 		this.source = source;
-		// TODO: Limit to 15
 
+		// TODO: Limit to 15
 		this.parameters = parameters || [];
 		this.parameters
 			.map((parameter) => parameter || "")
@@ -81,13 +81,13 @@ class Message {
 			.build();
 	}
 
-	static makeNumeric(numeric, command, username) {
-		const message = this.NumericMessage[numeric];
+	static makeNumeric(numeric, command, username, customMessage) {
+		const message = customMessage || this.NumericMessage[numeric];
 		const params = [username];
 		if (command) {
 			params.push(command);
 		}
-		params.push(message)
+		params.push(message);
 
 		return new Message(numeric, params);
 	}
@@ -132,6 +132,7 @@ class Message {
 Message.Command = {
 	// Messages
 	JOIN: "JOIN",
+	NAMES: "NAMES",
 	NICK: "NICK",
 	PART: "PART",
 	PING: "PING",
@@ -168,6 +169,7 @@ Message.Command = {
 
 Message.NumericMessage = {
 	[Message.Command.RPL_NOTOPIC]: "No topic is set",
+	[Message.Command.RPL_ENDOFNAMES]: "End of /NAMES list",
 	[Message.Command.ERR_NOSUCHNICK]: "No such nick/channel",
 	[Message.Command.ERR_NOSUCHCHANNEL]: "No such channel",
 	[Message.Command.ERR_NORECIPIENT]: "No recipient given",
