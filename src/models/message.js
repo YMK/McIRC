@@ -1,3 +1,5 @@
+const {format, parse} = require("tekko");
+
 class Message {
 
 	constructor(name, parameters, source) {
@@ -19,23 +21,25 @@ class Message {
 		// [@tags] [:source] <command> <parameters>
 
 		// TODO: add tags
-		let string = "";
-		if (this.source) {
-			string += `:${this.source} `
-		}
-		string += this.command;
-		const lastParam = this.parameters[this.parameters.length - 1];
-		if (lastParam) {
-			const lastParamString = lastParam.includes(" ") ? `:${lastParam}` : lastParam;
-			if (this.parameters.length > 1) {
-				const paramString = `${this.parameters.slice(0, -1).join(" ")} ${lastParamString}`;
-				string += ` ${paramString}`;
-			} else {
-				string += ` ${lastParamString}`;
-			}
+
+		let params = this.parameters;
+		let lastParam;
+		if (params && params.length > 0 && params[params.length - 1].includes(" ")) {
+			lastParam = params[params.length - 1];
+			params = params.slice(0, -1);
 		}
 
-		return string.trim();
+		const formatParams = {
+			command: this.command,
+			params: params,
+			trailing: lastParam
+		};
+
+		if (this.source) {
+			formatParams.prefix = {name: this.source};
+		}
+
+		return format(formatParams);
 	}
 
 	static makeISupport(username) {
@@ -89,26 +93,10 @@ class Message {
 	}
 
 	static fromMessageString(user, string) {
-		const elements = string.split(" ");
+		const parsed = parse(string);
+		const source = parsed.prefix && parsed.prefix.name ? parsed.prefix.name : user;
 
-		const tagString = elements[0].indexOf("@") === 0 ? elements[0] : null;
-		const maybeSource = tagString && elements.length > 1 ? elements[1] : elements[0];
-		const source = maybeSource.indexOf(":") === 0 ? maybeSource.slice(1) : null;
-		const numberPreCommand = Number(Boolean(source)) + Number(Boolean(tagString));
-		const commandName = elements[numberPreCommand];
-		const params = elements.slice(numberPreCommand + 1);
-		const parameters = [];
-		for (let index = 0; index < params.length; index++) {
-			const param = params[index];
-			if (param.includes(":")) {
-				parameters.push(`${param.slice(1)} ${params.slice(index + 1).join(" ")}`);
-				break;
-			} else {
-				parameters.push(param);
-			}
-		}
-
-		return new Message(commandName, parameters, source || user);
+		return new Message(parsed.command, parsed.params.concat(parsed.trailing), source);
 	}
 
 	static Builder() {
