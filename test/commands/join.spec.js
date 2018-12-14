@@ -126,6 +126,17 @@ test("Sends join message to other users in channel", () => {
     expect(messageString).toBe(":username JOIN #test");
 });
 
-test.skip("Sends names to user's client", () => {
-    expect(true).toBe(false);
+test("Sends names to user's client", () => {
+    expect(state.channels).toEqual({});
+    const existingUser = new user("owner", {send: jest.fn()}, "owner", "localhost", "", "");
+    const existingChan = new Channel("#test", existingUser);
+    state.channels = {"#test": existingChan};
+    const chanlist = "#test";
+    tested.run(new mockClient(), chanlist);
+
+    const nameReplyString = mockSend.mock.calls[2][0].getMessageString();
+    expect(nameReplyString).toBe("353 username = #test owner");
+
+    const endOfNamesString = mockSend.mock.calls[4][0].getMessageString();
+    expect(endOfNamesString).toBe("366 username #test :End of /NAMES list");
 });
