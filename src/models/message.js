@@ -165,6 +165,7 @@ Message.Command = {
 	ERR_NICKNAMEINUSE: "433",
 	ERR_NOTONCHANNEL: "442",
 	ERR_NEEDMOREPARAMS: "461",
+	ERR_BADCHANNELKEY: "475"
 };
 
 Message.NumericMessage = {
@@ -179,6 +180,7 @@ Message.NumericMessage = {
 	[Message.Command.ERR_NICKNAMEINUSE]: "Nickname is already in use",
 	[Message.Command.ERR_NOTONCHANNEL]: "You're not on that channel",
 	[Message.Command.ERR_NEEDMOREPARAMS]: "Not enough parameters",
+	[Message.Command.ERR_BADCHANNELKEY]: "Cannot join channel (+k)"
 }
 
 module.exports = Message;

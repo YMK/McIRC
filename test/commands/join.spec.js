@@ -140,3 +140,78 @@ test("Sends names to user's client", () => {
     const endOfNamesString = mockSend.mock.calls[4][0].getMessageString();
     expect(endOfNamesString).toBe("366 username #test :End of /NAMES list");
 });
+
+test("Allows user to join when key matches key", () => {
+    expect(state.channels).toEqual({});
+    const existingUser = new user("owner", {send: jest.fn()}, "owner", "localhost", "", "");
+    const existingChan = new Channel("#test", existingUser);
+    existingChan.setKey("thisisakey123");
+    state.channels = {"#test": existingChan};
+    const chanlist = "#test";
+    const keylist = "thisisakey123";
+    tested.run(new mockClient(), chanlist, keylist);
+
+    const messageString = mockSend.mock.calls[0][0].getMessageString();
+
+    expect(messageString).toBe(":username JOIN #test");
+});
+
+test("Allows user to join when we provide a key but the channel doesn't require one", () => {
+    expect(state.channels).toEqual({});
+    const existingUser = new user("owner", {send: jest.fn()}, "owner", "localhost", "", "");
+    const existingChan = new Channel("#test", existingUser);
+    state.channels = {"#test": existingChan};
+    const chanlist = "#test";
+    const keylist = "thisisakey123";
+    tested.run(new mockClient(), chanlist, keylist);
+
+    const messageString = mockSend.mock.calls[0][0].getMessageString();
+
+    expect(messageString).toBe(":username JOIN #test");
+});
+
+test("Refuses to allow user to join when no key", () => {
+    expect(state.channels).toEqual({});
+    const existingUser = new user("owner", {send: jest.fn()}, "owner", "localhost", "", "");
+    const existingChan = new Channel("#test", existingUser);
+    existingChan.setKey("thisisakey123");
+    state.channels = {"#test": existingChan};
+    const chanlist = "#test";
+    tested.run(new mockClient(), chanlist);
+
+    const messageString = mockSend.mock.calls[0][0].getMessageString();
+
+    expect(messageString).toBe("475 username #test :Cannot join channel (+k)");
+});
+
+test("Refuses to allow user to join when key is incorrect", () => {
+    expect(state.channels).toEqual({});
+    const existingUser = new user("owner", {send: jest.fn()}, "owner", "localhost", "", "");
+    const existingChan = new Channel("#test", existingUser);
+    existingChan.setKey("thisisakey123");
+    state.channels = {"#test": existingChan};
+    const chanlist = "#test";
+    const keylist = "thisisthewrongkey";
+    tested.run(new mockClient(), chanlist, keylist);
+
+    const messageString = mockSend.mock.calls[0][0].getMessageString();
+
+    expect(messageString).toBe("475 username #test :Cannot join channel (+k)");
+});
+
+test("Sending multiple keys", () => {
+    expect(state.channels).toEqual({});
+    const existingUser = new user("owner", {send: jest.fn()}, "owner", "localhost", "", "");
+    const existingChan = new Channel("#test", existingUser);
+    existingChan.setKey("thisisakey123");
+    state.channels = {"#test": existingChan};
+    const chanlist = "#initial,#test";
+    const keylist = ",thisisakey123";
+    tested.run(new mockClient(), chanlist, keylist);
+
+    let messageString = mockSend.mock.calls[0][0].getMessageString();
+    expect(messageString).toBe(":username JOIN #initial");
+
+    messageString = mockSend.mock.calls[4][0].getMessageString();
+    expect(messageString).toBe(":username JOIN #test");
+});

@@ -9,6 +9,7 @@ module.exports = class Channel {
 		this.owner = owner;
 		this.topic = null;
 		this.modes = [];
+		this.key = null;
 	}
 
 	addUser(user) {
@@ -30,11 +31,19 @@ module.exports = class Channel {
 			this.topic = new Topic(text, author);
 		}
 
-return text;
+		return text;
 	}
 
 	clearTopic() {
 		this.topic = null;
+	}
+
+	setKey(key) {
+		this.key = key;
+	}
+
+	clearKey() {
+		this.key = null;
 	}
 
 	sendMessage(from, messageText) {
