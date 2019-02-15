@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "eslint": "5.13.0",
-    "eslint-plugin-jest": "21.27.2",
+    "eslint-plugin-jest": "22.3.0",
     "jest": "24.1.0",
     "stream-replace": "1.0.0"
   },
