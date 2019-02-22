@@ -1,4 +1,5 @@
 const commands = require("./commands");
+const Quit = require("./commands/quit");
 const timeout = require("./utils/timeout");
 const Message = require("./models/message");
 const logger = require("./utils/logger");
@@ -7,10 +8,10 @@ module.exports = class ClientManager {
 
 	constructor(client) {
 		const that = this;
+		that.connected = true;
 		that.client = client;
 		client.buffer = "";
 		logger.debug("Client connected");
-		timeout.runTimeout(that);
 
 		client.on("data", function (data) {
 			let lines = data.toString().split(/\r\n/);
@@ -58,18 +59,23 @@ module.exports = class ClientManager {
 	}
 
 	send(message) {
-		logger.debug(`Raw sending: ${message.getMessageString()}`);
-		try {
-			this.client.write(`${message.getMessageString()}\r\n`);
-		} catch (e) {
-			logger.error("Error, no connection anymore");
+		if (this.connected) {
+			logger.debug(`Raw sending: ${message.getMessageString()}`);
+			try {
+				this.client.write(`${message.getMessageString()}\r\n`);
+			} catch (e) {
+				logger.error("Error, no connection anymore");
+			}
+		} else {
+			logger.warn("User not connected, not sending message");
 		}
 	}
 
 	disconnected() {
-		logger.debug(`User ${this.user ? this.user.username : "unknown"} disconnected`);
-		timeout.clearInterval();
 		this.connected = false;
+		logger.debug(`User ${this.user ? this.user.username : "unknown"} disconnected`);
+		Quit.run(this, "Ping Timeout");
+		timeout.clearInterval(this.user.username);
 	}
 
 };

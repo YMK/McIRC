@@ -3,6 +3,7 @@ const state = require("../state");
 const User = require("../models/user");
 const welcome = require("../utils/welcome");
 const logger = require("../utils/logger");
+const timeout = require("../utils/timeout");
 
 module.exports = {
 	test: (command) => command === Message.Command.USER,
@@ -16,6 +17,8 @@ module.exports = {
 		} else {
 			logger.debug("User set, already got nick");
 			client.user.updateInfo({username, hostname, servername, realname});
+			timeout.clearInterval(client.user.username);
+			timeout.runTimeout(client);
 			welcome(client);
 		}
 	}

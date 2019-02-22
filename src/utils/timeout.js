@@ -1,14 +1,14 @@
 const Message = require("../models/message");
 const logger = require("../utils/logger");
-let interval;
+const intervals = {};
 
 module.exports = {
 	waitingForResponse: false,
 	timeoutTime: 30 * 1000,
 	runTimeout: function (client) {
-		interval = setInterval(() => {
+		intervals[client.user.username] = setInterval(() => {
 			if (this.waitingForResponse) {
-				clearInterval(interval);
+				client.disconnected();
 				logger.error("Error: Ping timeout");
 			} else {
 				this.waitingForResponse = true;
@@ -22,7 +22,7 @@ module.exports = {
 	receivedPong: function () {
 		this.waitingForResponse = false;
 	},
-	clearInterval: function () {
-		clearInterval(interval);
+	clearInterval: function (username) {
+		clearInterval(intervals[username]);
 	}
 };
