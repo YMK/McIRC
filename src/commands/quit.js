@@ -14,6 +14,8 @@ module.exports = {
 			chan.sendMessage(client.user.username, quitMessage);
 		});
 
-		client.disconnected();
+		if (client.connected) {
+			client.disconnected();
+		}
 	}
 };
