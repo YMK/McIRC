@@ -51,8 +51,8 @@ module.exports = class ClientManager {
 	}
 
 	getUserNick() {
-		if (this.client && this.client.user && this.client.user.nick) {
-			return this.client.user.nick;
+		if (this.user) {
+			return this.user.nick;
 		}
 
 		return "";

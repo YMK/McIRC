@@ -10,9 +10,10 @@ module.exports = {
             user = userOrNick;
         }
 
-return jest.fn().mockImplementation(() => ({
+        return jest.fn().mockImplementation(() => ({
             user: user,
-            send: mockSend
+            send: mockSend,
+            getUserNick: () => user.nick
         }))
     }
 }

@@ -24,7 +24,7 @@ class Message {
 
 		let params = this.parameters;
 		let lastParam;
-		if (params && params.length > 0 && params[params.length - 1].includes(" ")) {
+		if (params && params.length > 0 && params[params.length - 1] && params[params.length - 1].includes(" ")) {
 			lastParam = params[params.length - 1];
 			params = params.slice(0, -1);
 		}
@@ -81,11 +81,13 @@ class Message {
 			.build();
 	}
 
-	static makeNumeric(numeric, command, username, customMessage) {
+	static makeNumeric(numeric, customParams, user, customMessage) {
 		const message = customMessage || this.NumericMessage[numeric];
-		const params = [username];
-		if (command) {
-			params.push(command);
+		let params = [user];
+		if (customParams && Array.isArray(customParams)) {
+			params = params.concat(customParams);
+		} else if (customParams) {
+			params.push(customParams);
 		}
 		params.push(message);
 
@@ -142,6 +144,7 @@ Message.Command = {
 	TOPIC: "TOPIC",
 	USER: "USER",
 	VERSION: "VERSION",
+	WHOIS: "WHOIS",
 
 	// Numerics
 	RPL_WELCOME: "001",
@@ -149,6 +152,12 @@ Message.Command = {
 	RPL_CREATED: "003",
 	RPL_MYINFO: "004",
 	RPL_ISUPPORT: "005",
+	RPL_WHOISUSER: "311",
+	RPL_WHOISSERVER: "312",
+	RPL_WHOISOPERATOR: "313",
+	RPL_WHOISIDLE: "317",
+	RPL_ENDOFWHOIS: "318",
+	RPL_WHOISCHANNELS: "319",
 	RPL_NOTOPIC: "331",
 	RPL_TOPIC: "332",
 	RPL_TOPICWHOTIME: "333",
@@ -169,6 +178,7 @@ Message.Command = {
 };
 
 Message.NumericMessage = {
+	[Message.Command.RPL_ENDOFWHOIS]: "End of /WHOIS list",
 	[Message.Command.RPL_NOTOPIC]: "No topic is set",
 	[Message.Command.RPL_ENDOFNAMES]: "End of /NAMES list",
 	[Message.Command.ERR_NOSUCHNICK]: "No such nick/channel",

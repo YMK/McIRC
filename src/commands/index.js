@@ -8,4 +8,5 @@ module.exports = [
 	require("./quit"),
 	require("./topic"),
 	require("./user"),
+	require("./whois"),
 ];
