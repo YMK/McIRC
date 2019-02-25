@@ -6,7 +6,7 @@ const myFormat = printf((info) => `[${info.level}]: ${info.message}`);
 const logger = createLogger({
     format: myFormat,
     transports: [new transports.Console()],
-    level: "info"
+    level: "debug"
 });
 
 module.exports = logger;
