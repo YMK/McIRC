@@ -30,7 +30,7 @@ test("Sends whois RPLs to user", () => {
     expect(endOfNamesString).toBe("319 username owner #test");
 
     const endOfNamesString2 = mockSend.mock.calls[2][0].getMessageString();
-    expect(endOfNamesString2).toBe("312 username owner servername :Server info");
+    expect(endOfNamesString2).toBe("312 username owner mcirc.yamanickill.com :Default Server Info");
 
     const endOfNamesString4 = mockSend.mock.calls[3][0].getMessageString();
     expect(endOfNamesString4).toBe("318 username owner :End of /WHOIS list");
