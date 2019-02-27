@@ -1,5 +1,6 @@
 const Message = require("../models/message");
 const state = require("../state");
+const {config} = require("../configManager");
 
 module.exports = {
 	test: (command) => command === Message.Command.WHOIS,
@@ -32,9 +33,9 @@ module.exports = {
 		client.send(Message.makeNumeric(Message.Command.RPL_WHOISCHANNELS, [user.nick], client.getUserNick(), chanlist));
 		client.send(Message.makeNumeric(
 			Message.Command.RPL_WHOISSERVER,
-			[user.nick, "servername"], // TODO: Get from config
+			[user.nick, config.serverName],
 			client.getUserNick(),
-			"Server info" // TODO: Get from config
+			config.serverInfo
 		));
 
 		// TODO: RPL_WHOISOPERATOR

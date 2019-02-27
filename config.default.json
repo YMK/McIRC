@@ -1,0 +1,10 @@
+{
+    "network": "McIRC",
+    "serverName": "mcirc.yamanickill.com",
+    "serverInfo": "Default Server Info",
+    "channelLength": 100,
+    "hostLength": 100,
+    "nickLength": 31,
+    "userLength": 31
+
+}

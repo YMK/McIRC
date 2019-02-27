@@ -1,4 +1,5 @@
 const {format, parse} = require("tekko");
+const {config} = require("../configManager");
 
 class Message {
 
@@ -51,22 +52,22 @@ class Message {
 			.withParameter("CASEMAPPING=ascii")
 			.withParameter("CHANLIMIT=#:")
 			// TODO: Add CHANMODES=ASDSDGFW (for channel modes) **REQUIRED**
-			.withParameter("CHANNELLEN=100") // TODO: add this to config
+			.withParameter(`CHANNELLEN=${config.channelLength}`)
 			.withParameter("CHANTYPES=#")
 			// TODO: Add ELIST= (for LIST search) **REQUIRED**
 			// TODO: Add EXCEPTS=e (for ban exceptions)
 			// TODO: Add EXTBAN= (for extended ban masks)
-			.withParameter("HOSTLEN=100") // TODO: add this to config
+			.withParameter(`HOSTLEN=${config.hostLength}`)
 			// TODO: Add KICKLEN=255 (for kick reason lengths) **REQUIRED**
 			// TODO: Add MAXLIST= (for something to do with modes) **REQUIRED**
-			.withParameter("NETWORK=McIRC") // TODO: Add this to config
-			.withParameter("NICKLEN=31") // TODO: Add this to config
+			.withParameter(`NETWORK=${config.network}`)
+			.withParameter(`NICKLEN=${config.nickLength}`)
 			// TODO: Add PREFX= (for user prefixes on channels)
 			// TODO: Maybe add SAFELIST if necessary? Maybe make it configurable
 			// TODO: Add SILENCE
 			// TODO: Add STATUSMSG= (for supporting sending messages to a prefix on a channel) **REQUIRED**
 			// TODO: Add TOPICLEN=390 (for max topic length) **REQUIRED**
-			.withParameter("USERLEN=31") // TODO: Add this to config
+			.withParameter(`USERLEN=${config.userLength}`)
 			.withParameter("are supported by this server")
 			.build();
 		/* eslint-enable */
