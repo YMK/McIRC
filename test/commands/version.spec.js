@@ -1,4 +1,5 @@
 const tested = require("../../src/commands/version");
+const {version} = require("../../package.json");
 
 let mockClient, mockSend;
 
@@ -19,7 +20,7 @@ test("Sends 2 messages", () => {
 test("Sends RPL_VERSION", () => {
     tested.run(new mockClient());
 
-    expect(mockSend.mock.calls[1][0].getMessageString()).toBe("351 username McIRC-0.0.1 server-name");
+    expect(mockSend.mock.calls[1][0].getMessageString()).toBe(`351 username McIRC-${version} mcirc.yamanickill.com`);
 });
 
 test("Sends RPL_ISUPPORT", () => {

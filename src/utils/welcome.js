@@ -1,4 +1,6 @@
 const Message = require("../models/message");
+const {config} = require("../configManager");
+const {version} = require("../../package.json");
 
 const WELCOME = "Welcome to the Internet Relay Network";
 const YOUR_HOST = "Your host is localhost, running version";
@@ -13,17 +15,17 @@ module.exports = (client) => {
 	client.send(Message.Builder()
 		.withCommand(Message.Command.RPL_YOURHOST)
 		.withParameter(client.user.nick)
-		.withParameter(`${YOUR_HOST} 0.0.1`)
+		.withParameter(`${YOUR_HOST} ${version}`)
 		.build());
 	client.send(Message.Builder()
 		.withCommand(Message.Command.RPL_CREATED)
 		.withParameter(client.user.nick)
-		.withParameter(`${CREATED} ${(new Date()).toISOString()}`)
+		.withParameter(`${CREATED} ${(new Date()).toISOString()}`) // TODO: Time that the server was started
 		.build());
 	client.send(Message.Builder()
 		.withCommand(Message.Command.RPL_MYINFO)
 		.withParameter(client.user.nick)
-		.withParameter("localhost 0.0.1 o o")
+		.withParameter(`${config.serverName} ${version} o o`)
 		.build());
 
 	client.send(Message.makeISupport(client.user.nick));

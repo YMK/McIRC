@@ -1,5 +1,6 @@
 const {format, parse} = require("tekko");
 const {config} = require("../configManager");
+const {version} = require("../../package.json");
 
 class Message {
 
@@ -66,7 +67,7 @@ class Message {
 			// TODO: Maybe add SAFELIST if necessary? Maybe make it configurable
 			// TODO: Add SILENCE
 			// TODO: Add STATUSMSG= (for supporting sending messages to a prefix on a channel) **REQUIRED**
-			// TODO: Add TOPICLEN=390 (for max topic length) **REQUIRED**
+			.withParameter(`TOPICLEN=${config.topicLength}`)
 			.withParameter(`USERLEN=${config.userLength}`)
 			.withParameter("are supported by this server")
 			.build();
@@ -77,8 +78,8 @@ class Message {
 		return Message.Builder()
 			.withCommand(this.Command.RPL_VERSION)
 			.withParameter(username)
-			.withParameter("McIRC-0.0.1")
-			.withParameter("server-name")
+			.withParameter(`McIRC-${version}`)
+			.withParameter(config.serverName)
 			.build();
 	}
 
