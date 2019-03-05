@@ -25,7 +25,10 @@ module.exports = (client) => {
 	client.send(Message.Builder()
 		.withCommand(Message.Command.RPL_MYINFO)
 		.withParameter(client.user.nick)
-		.withParameter(`${config.serverName} ${version} o o`)
+		.withParameter(config.serverName)
+		.withParameter(version)
+		.withParameter("o")
+		.withParameter("o")
 		.build());
 
 	client.send(Message.makeISupport(client.user.nick));
