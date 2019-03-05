@@ -5,6 +5,6 @@
     "channelLength": 100,
     "hostLength": 100,
     "nickLength": 31,
+    "topicLength": 390,
     "userLength": 31
-
 }
