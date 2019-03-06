@@ -1,20 +1,38 @@
-const {config} = require("./configManager");
-const logger = require("./utils/logger")({level: config.logLevel});
 
 const net = require("net");
-const ClientManager = require("./clientManager");
-require("./state");
 
-const server = net.createServer((client) => {
-    logger.debug("New connection, creating client");
-    const clientManager = new ClientManager(client);
-    client.on("error", (err) => {
-        if (err.code === "ECONNRESET") {
-            clientManager.disconnected();
-        } else {
-            logger.error(err);
+module.exports = class McIrc {
+
+	constructor(customConfig) {
+        const {config, addConfig} = require("./configManager");
+        if (customConfig) {
+            addConfig(config);
         }
-    });
-});
+        const logger = require("./utils/logger")({level: config.logLevel});
+        const ClientManager = require("./clientManager");
+        require("./state");
 
-server.listen(6667, "127.0.0.1", () => logger.info("Server up and running"));
+        this.config = config;
+        this.logger = logger;
+        this.server = net.createServer((client) => {
+            logger.debug("New connection, creating client");
+            const clientManager = new ClientManager(client);
+            client.on("error", (err) => {
+                if (err.code === "ECONNRESET") {
+                    clientManager.disconnected();
+                } else {
+                    logger.error(err);
+                }
+            });
+        });
+    }
+
+    start() {
+        this.server.listen(6667, "127.0.0.1", () => this.logger.info("Server up and running"));
+    }
+
+    stop() {
+        this.server.close();
+    }
+
+};

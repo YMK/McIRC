@@ -1,6 +1,8 @@
 const logger = require("../src/utils/logger")({level: "debug"});
+const McIrc = require("../src/");
+const server = new McIrc();
 
-require("../src"); // Start server
+server.start();
 const net = require("net");
 const assert = require("assert").strict;
 const {format, parse} = require("tekko");

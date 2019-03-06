@@ -11,7 +11,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint .",
-    "start": "node --use_strict src/index.js",
+    "start": "node --use_strict src/cli.js",
+    "test:all": "yarn lint && yarn test && yarn test:integration",
     "test": "jest",
     "test:client": "node test/client.js",
     "test:integration": "node test/integration.js"
