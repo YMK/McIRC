@@ -69,19 +69,6 @@ test("Sends topic to user if there is one", () => {
     expect(messageString).toBe("332 username #test :This is the topic");
 });
 
-test("Sends notopic to user if there is no topic", () => {
-    expect(state.channels).toEqual({});
-    const existingUser = new user("owner", {send: jest.fn()}, "owner", "localhost", "", "");
-    const existingChan = new Channel("#test", existingUser);
-    state.channels = {"#test": existingChan};
-    const chanlist = "#test";
-    tested.run(new mockClient(), chanlist);
-
-    const messageString = mockSend.mock.calls[1][0].getMessageString();
-
-    expect(messageString).toBe("331 username #test :No topic is set");
-});
-
 test("Adds user to newly created channel", () => {
     expect(state.channels).toEqual({});
     const chanlist = "#test";
@@ -134,10 +121,10 @@ test("Sends names to user's client", () => {
     const chanlist = "#test";
     tested.run(new mockClient(), chanlist);
 
-    const nameReplyString = mockSend.mock.calls[2][0].getMessageString();
+    const nameReplyString = mockSend.mock.calls[1][0].getMessageString();
     expect(nameReplyString).toBe("353 username = #test owner");
 
-    const endOfNamesString = mockSend.mock.calls[4][0].getMessageString();
+    const endOfNamesString = mockSend.mock.calls[3][0].getMessageString();
     expect(endOfNamesString).toBe("366 username #test :End of /NAMES list");
 });
 
@@ -212,6 +199,6 @@ test("Sending multiple keys", () => {
     let messageString = mockSend.mock.calls[0][0].getMessageString();
     expect(messageString).toBe(":username JOIN #initial");
 
-    messageString = mockSend.mock.calls[4][0].getMessageString();
+    messageString = mockSend.mock.calls[3][0].getMessageString();
     expect(messageString).toBe(":username JOIN #test");
 });

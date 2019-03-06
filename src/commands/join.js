@@ -53,8 +53,6 @@ module.exports = {
 					.withParameter(channel.name)
 					.withParameter(channel.topic.text)
 					.build());
-			} else {
-				client.send(Message.makeNumeric(Message.Command.RPL_NOTOPIC, chanName, client.user.nick));
 			}
 
 			channel.getUsers()

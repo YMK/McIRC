@@ -1,5 +1,5 @@
 const Message = require("../models/message");
-const logger = require("../utils/logger");
+const logger = require("../utils/logger")();
 const intervals = {};
 
 module.exports = {

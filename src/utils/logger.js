@@ -3,10 +3,16 @@ const {printf} = format;
 
 const myFormat = printf((info) => `[${info.level}]: ${info.message}`);
 
-const logger = createLogger({
-    format: myFormat,
-    transports: [new transports.Console()],
-    level: "debug"
-});
+let logger;
 
-module.exports = logger;
+const create = ({level = "info"}) => {
+    logger = createLogger({
+        format: myFormat,
+        transports: [new transports.Console()],
+        level
+    });
+
+    return logger;
+}
+
+module.exports = ({level} = {}) => logger || create({level});

@@ -1,6 +1,7 @@
+const logger = require("./utils/logger")({level: "debug"});
+
 const net = require("net");
 const ClientManager = require("./clientManager");
-const logger = require("./utils/logger");
 require("./state");
 
 const server = net.createServer((client) => {

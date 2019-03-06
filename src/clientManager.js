@@ -2,7 +2,7 @@ const commands = require("./commands");
 const Quit = require("./commands/quit");
 const timeout = require("./utils/timeout");
 const Message = require("./models/message");
-const logger = require("./utils/logger");
+const logger = require("./utils/logger")();
 
 module.exports = class ClientManager {
 
