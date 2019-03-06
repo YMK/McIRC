@@ -1,4 +1,5 @@
-const logger = require("./utils/logger")({level: "debug"});
+const {config} = require("./configManager");
+const logger = require("./utils/logger")({level: config.logLevel});
 
 const net = require("net");
 const ClientManager = require("./clientManager");
