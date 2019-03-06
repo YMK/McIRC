@@ -6,5 +6,6 @@
     "hostLength": 100,
     "nickLength": 31,
     "topicLength": 390,
-    "userLength": 31
+    "userLength": 31,
+    "logLevel": "info"
 }
