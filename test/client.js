@@ -6,7 +6,7 @@ const client = net.connect({
 const readline = require("readline");
 const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 const username = process.argv.length > 2 ? process.argv[2] : "test";
-const logger = require("./src/utils/logger");
+const logger = require("../src/utils/logger")();
 client.setEncoding("utf8");
 
 client.on("data", (data) => {

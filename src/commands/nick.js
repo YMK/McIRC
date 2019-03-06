@@ -2,7 +2,7 @@ const Message = require("../models/message");
 const state = require("../state");
 const User = require("../models/user");
 const welcome = require("../utils/welcome");
-const logger = require("../utils/logger");
+const logger = require("../utils/logger")();
 
 module.exports = {
 	test: (command) => command === Message.Command.NICK,
