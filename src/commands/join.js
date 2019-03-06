@@ -40,7 +40,7 @@ module.exports = {
 			}
 			client.user.addChannel(channel);
 			const joinMessage = Message.Builder()
-				.withSource(client.user.nick)
+				.withSource(client.user.getHostMask())
 				.withCommand(Message.Command.JOIN)
 				.withParameter(chanName)
 				.build();

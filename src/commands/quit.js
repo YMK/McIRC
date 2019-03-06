@@ -4,7 +4,7 @@ module.exports = {
 	test: (command) => command === Message.Command.QUIT,
 	run: (client, reason) => {
 		const quitMessage = Message.Builder()
-			.withSource(`${client.user.username}@${client.user.hostname}`)
+			.withSource(client.user.getHostMask())
 			.withCommand(Message.Command.QUIT)
 			.withParameter(`Quit: ${reason}`)
 			.build();

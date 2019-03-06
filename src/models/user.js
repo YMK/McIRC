@@ -22,6 +22,10 @@ module.exports = class User {
 		return this.channels;
 	}
 
+	getHostMask() {
+		return `${this.nick}!${this.username}@${this.hostname}`;
+	}
+
 	updateInfo({nick, username, hostname, servername, realname}) {
 		this.nick = nick || this.nick;
 		this.username = username || this.username;

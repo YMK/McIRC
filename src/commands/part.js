@@ -20,7 +20,7 @@ module.exports = {
 			}
 
 			const partMessage = Message.Builder()
-				.withSource(`${client.user.username}@${client.user.hostname}`)
+				.withSource(client.user.getHostMask())
 				.withCommand(Message.Command.PART)
 				.withParameter(chan)
 				.withParameter(reason || "")

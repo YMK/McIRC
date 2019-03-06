@@ -96,7 +96,7 @@ test("Sends join message to user's client", () => {
 
     const messageString = mockSend.mock.calls[0][0].getMessageString();
 
-    expect(messageString).toBe(":username JOIN #test");
+    expect(messageString).toBe(":username!username@localhost JOIN #test");
 });
 
 test("Sends join message to other users in channel", () => {
@@ -110,7 +110,7 @@ test("Sends join message to other users in channel", () => {
 
     const messageString = existingUserSend.mock.calls[0][0].getMessageString();
 
-    expect(messageString).toBe(":username JOIN #test");
+    expect(messageString).toBe(":username!username@localhost JOIN #test");
 });
 
 test("Sends names to user's client", () => {
@@ -140,7 +140,7 @@ test("Allows user to join when key matches key", () => {
 
     const messageString = mockSend.mock.calls[0][0].getMessageString();
 
-    expect(messageString).toBe(":username JOIN #test");
+    expect(messageString).toBe(":username!username@localhost JOIN #test");
 });
 
 test("Allows user to join when we provide a key but the channel doesn't require one", () => {
@@ -154,7 +154,7 @@ test("Allows user to join when we provide a key but the channel doesn't require 
 
     const messageString = mockSend.mock.calls[0][0].getMessageString();
 
-    expect(messageString).toBe(":username JOIN #test");
+    expect(messageString).toBe(":username!username@localhost JOIN #test");
 });
 
 test("Refuses to allow user to join when no key", () => {
@@ -197,8 +197,8 @@ test("Sending multiple keys", () => {
     tested.run(new mockClient(), chanlist, keylist);
 
     let messageString = mockSend.mock.calls[0][0].getMessageString();
-    expect(messageString).toBe(":username JOIN #initial");
+    expect(messageString).toBe(":username!username@localhost JOIN #initial");
 
     messageString = mockSend.mock.calls[3][0].getMessageString();
-    expect(messageString).toBe(":username JOIN #test");
+    expect(messageString).toBe(":username!username@localhost JOIN #test");
 });
