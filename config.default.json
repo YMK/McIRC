@@ -7,5 +7,6 @@
     "nickLength": 31,
     "topicLength": 390,
     "userLength": 31,
-    "logLevel": "info"
+    "logLevel": "info",
+    "motd": "Welcome to the IRC Server"
 }
