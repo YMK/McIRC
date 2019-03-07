@@ -135,7 +135,9 @@ class Message {
 
 Message.Command = {
 	// Messages
+	ADMIN: "ADMIN",
 	JOIN: "JOIN",
+	MOTD: "MOTD",
 	NAMES: "NAMES",
 	NICK: "NICK",
 	PART: "PART",
@@ -154,6 +156,10 @@ Message.Command = {
 	RPL_CREATED: "003",
 	RPL_MYINFO: "004",
 	RPL_ISUPPORT: "005",
+	RPL_ADMINME: "256",
+	RPL_ADMINLOC1: "257",
+	RPL_ADMINLOC2: "258",
+	RPL_ADMINEMAIL: "259",
 	RPL_WHOISUSER: "311",
 	RPL_WHOISSERVER: "312",
 	RPL_WHOISOPERATOR: "313",
@@ -184,6 +190,7 @@ Message.Command = {
 };
 
 Message.NumericMessage = {
+	[Message.Command.RPL_ADMINME]: "Administrative info",
 	[Message.Command.RPL_ENDOFWHOIS]: "End of /WHOIS list",
 	[Message.Command.RPL_NOTOPIC]: "No topic is set",
 	[Message.Command.RPL_ENDOFNAMES]: "End of /NAMES list",

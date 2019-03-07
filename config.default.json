@@ -8,5 +8,10 @@
     "topicLength": 390,
     "userLength": 31,
     "logLevel": "info",
-    "motd": "Welcome to the IRC Server"
+    "motd": "Welcome to the IRC Server",
+    "admin": {
+        "location": "",
+        "owner": "",
+        "email": ""
+    }
 }
