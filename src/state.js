@@ -1,8 +1,11 @@
+const {config} = require("./configManager");
+
 class State {
 
 	constructor() {
 		this.users = {};
 		this.channels = {};
+		this.motd = config.motd || "";
 	}
 
 	addUser(user) {

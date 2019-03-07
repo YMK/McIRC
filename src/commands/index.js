@@ -1,5 +1,6 @@
 module.exports = [
 	require("./join"),
+	require("./motd"),
 	require("./nick"),
 	require("./part"),
 	require("./ping"),
