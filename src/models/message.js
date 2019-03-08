@@ -4,7 +4,7 @@ const {version} = require("../../package.json");
 
 class Message {
 
-	constructor(name, parameters, source) {
+	constructor(name, parameters, source, trailing) {
 		this.command = name;
 		this.source = source;
 
@@ -13,10 +13,11 @@ class Message {
 		this.parameters
 			.map((parameter) => parameter || "")
 			.forEach((parameter, index) => {
-			if (parameter.includes(" ") && index !== this.parameters.length - 1) {
+			if (parameter.includes(" ") && (index !== this.parameters.length - 1 || trailing)) {
 				throw new Error("Only final parameter can include spaces");
 			}
 		});
+		this.trailing = trailing;
 	}
 
 	getMessageString() {
@@ -29,6 +30,8 @@ class Message {
 		if (params && params.length > 0 && params[params.length - 1] && params[params.length - 1].includes(" ")) {
 			lastParam = params[params.length - 1];
 			params = params.slice(0, -1);
+		} else if (this.trailing) {
+			lastParam = this.trailing;
 		}
 
 		const formatParams = {
@@ -91,9 +94,8 @@ class Message {
 		} else if (customParams) {
 			params.push(customParams);
 		}
-		params.push(message);
 
-		return new Message(numeric, params);
+		return new Message(numeric, params, undefined, message);
 	}
 
 	static fromMessageString(user, string) {
