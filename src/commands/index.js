@@ -8,6 +8,7 @@ module.exports = [
 	require("./pong"),
 	require("./privmsg"),
 	require("./quit"),
+	require("./time"),
 	require("./topic"),
 	require("./user"),
 	require("./whois"),
