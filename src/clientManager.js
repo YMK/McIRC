@@ -41,7 +41,7 @@ module.exports = class ClientManager {
 			commands.forEach((command) => {
 				if (command.test(message.command.toUpperCase())) {
 					commandRun = true;
-					command.run(that, ...message.parameters);
+					command.run(that, {args: [...message.parameters], command: message.command});
 				}
 			});
 			if (!commandRun) {
@@ -74,7 +74,7 @@ module.exports = class ClientManager {
 	disconnected() {
 		this.connected = false;
 		logger.debug(`User ${this.user ? this.user.username : "unknown"} disconnected`);
-		Quit.run(this, "Ping Timeout");
+		Quit.run(this, {args: ["Ping Timeout"]});
 		timeout.clearInterval(this.user.username);
 	}
 

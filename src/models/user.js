@@ -14,6 +14,10 @@ module.exports = class User {
 		this.modes = [];
 	}
 
+	setClient(client) {
+		this.client = client;
+	}
+
 	addChannel(chan) {
 		this.channels.push(chan);
 	}
@@ -37,6 +41,16 @@ module.exports = class User {
 	sendMessage(from, messageText) {
 		const message = Message.Builder()
 			.withCommand(Message.Command.PRIVMSG)
+			.withSource(from)
+			.withParameter(this.nick)
+			.withParameter(messageText)
+			.build();
+		this.client.sendMessage(message);
+	}
+
+	sendNotice(from, messageText) {
+		const message = Message.Builder()
+			.withCommand(Message.Command.NOTICE)
 			.withSource(from)
 			.withParameter(this.nick)
 			.withParameter(messageText)

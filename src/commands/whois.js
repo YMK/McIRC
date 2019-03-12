@@ -4,7 +4,7 @@ const {config} = require("../configManager");
 
 module.exports = {
 	test: (command) => command === Message.Command.WHOIS,
-	run: (client, arg1, arg2) => {
+	run: function (client, {args: [arg1, arg2]} = {args: []}) {
 		let userName;
 		if (arg2) {
 			userName = arg2;

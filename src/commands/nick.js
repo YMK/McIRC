@@ -6,7 +6,7 @@ const logger = require("../utils/logger")();
 
 module.exports = {
 	test: (command) => command === Message.Command.NICK,
-	run: (client, newNick) => {
+	run: function (client, {args: [newNick]}) {
 		if (!newNick) {
 			return client.send(Message.makeNumeric(Message.Command.ERR_NONICKNAMEGIVEN, undefined, client.user.nick));
 		}

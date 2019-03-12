@@ -6,7 +6,7 @@ const state = require("../state");
 
 module.exports = {
 	test: (command) => command === Message.Command.JOIN,
-	run: (client, chanlist, keys) => {
+	run: function (client, {args: [chanlist, keys]}) {
 
 		if (!chanlist) {
 			return client.send(Message.makeNumeric(Message.Command.ERR_NEEDMOREPARAMS, Message.Command.JOIN, client.user.nick));

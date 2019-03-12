@@ -2,7 +2,7 @@ const Message = require("../models/message");
 
 module.exports = {
 	test: (command) => command === Message.Command.QUIT,
-	run: (client, reason) => {
+	run: function (client, {args: [reason]}) {
 		const quitMessage = Message.Builder()
 			.withSource(client.user.getHostMask())
 			.withCommand(Message.Command.QUIT)

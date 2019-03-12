@@ -21,7 +21,7 @@ test("Send ERR_NEEDMOREPARAMS if no channel name", () => {
 });
 
 test("Send ERR_NOSUCHCHANNEL if no channel", () => {
-    tested.run(new mockClient(), "#nochannel");
+    tested.run(new mockClient(), {args: ["#nochannel"]});
 
     expect(mockSend.mock.calls.length).toBe(1);
     expect(mockSend.mock.calls[0][0].getMessageString()).toBe("403 username #nochannel :No such channel");
@@ -39,7 +39,7 @@ describe("Getting TOPIC", () => {
 
     describe("When topic not set", () => {
         beforeEach(() => {
-            tested.run(new mockClient(), "#channel");
+            tested.run(new mockClient(), {args: ["#channel"]});
         });
 
         test("Sends 1 message when topic doesn't exists", () => {
@@ -54,7 +54,7 @@ describe("Getting TOPIC", () => {
     describe("When topic is set", () => {
         beforeEach(() => {
             existingChan.setTopic("This is the topic", "userWhoSetTheTopic");
-            tested.run(new mockClient(), "#channel");
+            tested.run(new mockClient(), {args: ["#channel"]});
         });
 
         test("Sends 2 messages when topic exists", () => {
@@ -85,7 +85,7 @@ describe("Setting topic", () => {
         existingChan.addUser(new User("otherUser", {send: otherUserMockSend}, "owner", "localhost", "", ""))
         state.channels = {"#channel": existingChan};
 
-        tested.run(new mockClient(), "#channel", "This is the new topic");
+        tested.run(new mockClient(), {args: ["#channel", "This is the new topic"]});
     });
 
     test("Sends RPL_TOPIC after setting", () => {
@@ -122,7 +122,7 @@ describe("Clearing topic", () => {
 
         state.channels = {"#channel": existingChan};
 
-        tested.run(new mockClient(), "#channel", "");
+        tested.run(new mockClient(), {args: ["#channel", ""]});
     });
 
     test("Sends NOTOPIC", () => {
