@@ -21,7 +21,7 @@ test("Sends whois RPLs to user", () => {
     state.channels = {"#test": existingChan};
     existingUser.addChannel(existingChan);
     state.users = {[existingUser.nick]: existingUser};
-    tested.run(new mockClient(), "owner");
+    tested.run(new mockClient(), {args: ["owner"]});
 
     const nameReplyString = mockSend.mock.calls[0][0].getMessageString();
     expect(nameReplyString).toBe("311 username owner owner localhost * :Real Name");

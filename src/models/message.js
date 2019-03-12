@@ -141,6 +141,7 @@ Message.Command = {
 	JOIN: "JOIN",
 	MOTD: "MOTD",
 	NAMES: "NAMES",
+	NOTICE: "NOTICE",
 	NICK: "NICK",
 	PART: "PART",
 	PING: "PING",

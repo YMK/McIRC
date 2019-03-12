@@ -61,4 +61,19 @@ module.exports = class Channel {
 		this.users.forEach((user) => user.nick !== from && user.client.send(message));
 	}
 
+	sendNotice(from, messageText) {
+		let message;
+		if (typeof messageText === "string") {
+			message = Message.Builder()
+				.withCommand(Message.Command.NOTICE)
+				.withSource(from)
+				.withParameter(this.name)
+				.withParameter(messageText)
+				.build();
+		} else {
+			message = messageText;
+		}
+		this.users.forEach((user) => user.nick !== from && user.client.send(message));
+	}
+
 };

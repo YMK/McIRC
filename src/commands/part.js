@@ -3,7 +3,7 @@ const state = require("../state");
 
 module.exports = {
 	test: (command) => command === Message.Command.PART,
-	run: (client, chanlist, reason) => {
+	run: function (client, {args: [chanlist, reason]}) {
 		if (!chanlist) {
 			return client.send(Message.makeNumeric(Message.Command.ERR_NEEDMOREPARAMS, Message.Command.PART, client.user.nick));
 		}

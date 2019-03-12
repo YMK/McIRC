@@ -3,13 +3,13 @@ const state = require("../state");
 const logger = require("../utils/logger")();
 
 module.exports = {
-	test: (command) => command === Message.Command.PRIVMSG,
-	run: function (client, recipientList) {
+	test: (command) => command === Message.Command.PRIVMSG || command === Message.Command.NOTICE,
+	run: function (client, {args: [recipientList, ...messageParts], command}) {
 		if (!recipientList) {
 			return client.send(Message.makeNumeric(Message.Command.ERR_NORECIPIENT, undefined, client.user.nick));
 		}
 
-		let message = Array.from(arguments).slice(2).join(" ");
+		let message = messageParts.join(" ");
 		if (!message) {
 			return client.send(Message.makeNumeric(Message.Command.ERR_NOTEXTTOSEND, undefined, client.user.nick));
 		}
@@ -25,8 +25,12 @@ module.exports = {
 				return client.send(Message.makeNumeric(Message.Command.ERR_NOSUCHNICK, to, client.user.nick));
 			}
 
-			logger.debug(`PRIVMSG to ${recipient} with ${message}`);
-			to.sendMessage(client.user.nick, message);
+			logger.debug(`${command} to ${recipient} with ${message}`);
+			if (command === Message.Command.PRIVMSG) {
+				to.sendMessage(client.user.nick, message);
+			} else if (command === Message.Command.NOTICE) {
+				to.sendNotice(client.user.nick, message);
+			}
 
 		});
 	}

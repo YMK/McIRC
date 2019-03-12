@@ -3,7 +3,7 @@ const state = require("../state");
 
 module.exports = {
 	test: (command) => command === Message.Command.TOPIC,
-	run: (client, chanName, newTopic) => {
+	run: function (client, {args: [chanName, newTopic]} = {args: []}) {
 		if (!chanName) {
 			return client.send(Message.makeNumeric(Message.Command.ERR_NEEDMOREPARAMS, Message.Command.TOPIC, client.user.nick));
 		}

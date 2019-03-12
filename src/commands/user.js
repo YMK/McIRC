@@ -7,7 +7,7 @@ const timeout = require("../utils/timeout");
 
 module.exports = {
 	test: (command) => command === Message.Command.USER,
-	run: (client, username, _, __, realname) => {
+	run: function (client, {args: [username, , , realname]}) {
 		// TODO check that there isn't a duplicate
 		if (!client.user) {
 			logger.debug("User set, no nick first");

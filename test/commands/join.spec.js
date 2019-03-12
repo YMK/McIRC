@@ -17,7 +17,7 @@ beforeEach(() => {
 test("Creates channel if it doesn't exist already", () => {
     expect(state.channels).toEqual({});
     const chanlist = "#test";
-    tested.run(new mockClient(), chanlist);
+    tested.run(new mockClient(), {args: [chanlist]});
 
     expect(Object.keys(state.channels).length).toBe(1);
 });
@@ -27,7 +27,7 @@ test("Doesn't create new channel if it already exists", () => {
     const existingChan = new Channel("#test", new user("owner", {send: jest.fn()}, "owner", "localhost", "", ""));
     state.channels = {"#test": existingChan};
     const chanlist = "#test";
-    tested.run(new mockClient(), chanlist);
+    tested.run(new mockClient(), {args: [chanlist]});
 
     expect(Object.keys(state.channels).length).toBe(1);
     expect(state.channels["#test"]).toBe(existingChan);
@@ -36,7 +36,7 @@ test("Doesn't create new channel if it already exists", () => {
 test("Creates multiple new channels", () => {
     expect(state.channels).toEqual({});
     const chanlist = "#test,#cheese,#hello";
-    tested.run(new mockClient(), chanlist);
+    tested.run(new mockClient(), {args: [chanlist]});
 
     expect(Object.keys(state.channels).length).toBe(3);
 });
@@ -46,7 +46,7 @@ test("Adds user to existing channel if already exists", () => {
     const existingChan = new Channel("#test", existingUser);
     state.channels = {"#test": existingChan};
     const chanlist = "#test";
-    tested.run(new mockClient(), chanlist);
+    tested.run(new mockClient(), {args: [chanlist]});
 
     expect(state.channels["#test"].users.length).toBe(2);
     expect(state.channels["#test"].users[0]).toBe(existingUser);
@@ -62,7 +62,7 @@ test("Sends topic to user if there is one", () => {
     existingChan.setTopic("This is the topic", "userThatSetTheTopic")
     state.channels = {"#test": existingChan};
     const chanlist = "#test";
-    tested.run(new mockClient(), chanlist);
+    tested.run(new mockClient(), {args: [chanlist]});
 
     const messageString = mockSend.mock.calls[1][0].getMessageString();
 
@@ -72,7 +72,7 @@ test("Sends topic to user if there is one", () => {
 test("Adds user to newly created channel", () => {
     expect(state.channels).toEqual({});
     const chanlist = "#test";
-    tested.run(new mockClient(), chanlist);
+    tested.run(new mockClient(), {args: [chanlist]});
 
     expect(state.channels["#test"].users.length).toBe(1);
     expect(state.channels["#test"].users[0].nick).toBe("username");
@@ -84,7 +84,7 @@ test("Adds channel to user's list of channels", () => {
     expect(newUser.channels.length).toBe(0);
     expect(state.channels).toEqual({});
     const chanlist = "#test";
-    tested.run(new mockClient(), chanlist);
+    tested.run(new mockClient(), {args: [chanlist]});
 
     expect(newUser.channels.length).toBe(1);
 });
@@ -92,7 +92,7 @@ test("Adds channel to user's list of channels", () => {
 test("Sends join message to user's client", () => {
     expect(state.channels).toEqual({});
     const chanlist = "#test";
-    tested.run(new mockClient(), chanlist);
+    tested.run(new mockClient(), {args: [chanlist]});
 
     const messageString = mockSend.mock.calls[0][0].getMessageString();
 
@@ -106,7 +106,7 @@ test("Sends join message to other users in channel", () => {
     const existingChan = new Channel("#test", existingUser);
     state.channels = {"#test": existingChan};
     const chanlist = "#test";
-    tested.run(new mockClient(), chanlist);
+    tested.run(new mockClient(), {args: [chanlist]});
 
     const messageString = existingUserSend.mock.calls[0][0].getMessageString();
 
@@ -119,7 +119,7 @@ test("Sends names to user's client", () => {
     const existingChan = new Channel("#test", existingUser);
     state.channels = {"#test": existingChan};
     const chanlist = "#test";
-    tested.run(new mockClient(), chanlist);
+    tested.run(new mockClient(), {args: [chanlist]});
 
     const nameReplyString = mockSend.mock.calls[1][0].getMessageString();
     expect(nameReplyString).toBe("353 username = #test owner");
@@ -136,7 +136,7 @@ test("Allows user to join when key matches key", () => {
     state.channels = {"#test": existingChan};
     const chanlist = "#test";
     const keylist = "thisisakey123";
-    tested.run(new mockClient(), chanlist, keylist);
+    tested.run(new mockClient(), {args: [chanlist, keylist]});
 
     const messageString = mockSend.mock.calls[0][0].getMessageString();
 
@@ -150,7 +150,7 @@ test("Allows user to join when we provide a key but the channel doesn't require 
     state.channels = {"#test": existingChan};
     const chanlist = "#test";
     const keylist = "thisisakey123";
-    tested.run(new mockClient(), chanlist, keylist);
+    tested.run(new mockClient(), {args: [chanlist, keylist]});
 
     const messageString = mockSend.mock.calls[0][0].getMessageString();
 
@@ -164,7 +164,7 @@ test("Refuses to allow user to join when no key", () => {
     existingChan.setKey("thisisakey123");
     state.channels = {"#test": existingChan};
     const chanlist = "#test";
-    tested.run(new mockClient(), chanlist);
+    tested.run(new mockClient(), {args: [chanlist]});
 
     const messageString = mockSend.mock.calls[0][0].getMessageString();
 
@@ -179,7 +179,7 @@ test("Refuses to allow user to join when key is incorrect", () => {
     state.channels = {"#test": existingChan};
     const chanlist = "#test";
     const keylist = "thisisthewrongkey";
-    tested.run(new mockClient(), chanlist, keylist);
+    tested.run(new mockClient(), {args: [chanlist, keylist]});
 
     const messageString = mockSend.mock.calls[0][0].getMessageString();
 
@@ -194,7 +194,7 @@ test("Sending multiple keys", () => {
     state.channels = {"#test": existingChan};
     const chanlist = "#initial,#test";
     const keylist = ",thisisakey123";
-    tested.run(new mockClient(), chanlist, keylist);
+    tested.run(new mockClient(), {args: [chanlist, keylist]});
 
     let messageString = mockSend.mock.calls[0][0].getMessageString();
     expect(messageString).toBe(":username!username@localhost JOIN #initial");

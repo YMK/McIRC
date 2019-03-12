@@ -45,7 +45,8 @@ const makeClient = () => {
     return client;
 };
 
-const client1 = makeClient();
+const client1 = makeClient(),
+        client2 = makeClient();
 
 const checkRegistration = async function () {
     client1.write(format({command: "NICK", params: ["McInkay"]}));
@@ -78,7 +79,6 @@ const checkJoining = async function () {
 }
 
 const checkSendingMessages = async function () {
-    const client2 = makeClient();
 
     client2.write(format({command: "NICK", params: ["User2"]}));
     client2.write("\r\n");
@@ -110,8 +110,28 @@ const checkSendingMessages = async function () {
     logger.info("Sending messages works correctly");
 }
 
+const checkSendingNotices = async function () {
+    client2.write(format({command: "NOTICE", params: ["#test"], trailing: "Hey there"}));
+    const client1Responses = await client1.waitForResponses(1);
+    assert(client1Responses.length === 1);
+    const client1Message = parse(client1Responses.shift());
+    assert(client1Message.command === "NOTICE");
+    assert(client1Message.trailing === "Hey there");
+    assert(client1Message.prefix.name === "User2");
+
+    client1.write(format({command: "NOTICE", params: ["#test"], trailing: "How's it going?"}));
+    const client2Responses = await client2.waitForResponses(1);
+    assert(client2Responses.length === 1);
+    const client2Message = parse(client2Responses.shift());
+    assert(client2Message.command === "NOTICE");
+    assert(client2Message.trailing === "How's it going?");
+    assert(client2Message.prefix.name === "McInkay");
+
+    logger.info("Sending notices works correctly");
+}
+
 const runTests = async function () {
-    const tests = [checkRegistration, checkJoining, checkSendingMessages];
+    const tests = [checkRegistration, checkJoining, checkSendingMessages, checkSendingNotices];
     for (const test of tests) {
         // eslint-disable-next-line no-await-in-loop
         await test();

@@ -3,7 +3,7 @@ const state = require("../state");
 
 module.exports = {
 	test: (command) => command === Message.Command.NAMES,
-	run: (client, chanlist) => {
+	run: function (client, {args: [chanlist]}) {
 		let chanName;
 		if (chanlist) {
 			[chanName] = chanlist.split(","); // We silently ignore all except the first, as is standard practice nowadays

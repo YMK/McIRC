@@ -20,7 +20,7 @@ test("Sends names to user's client", () => {
     const existingChan = new Channel("#test", existingUser);
     state.channels = {"#test": existingChan};
     const chanlist = "#test";
-    tested.run(new mockClient(), chanlist);
+    tested.run(new mockClient(), {args: [chanlist]});
 
     const nameReplyString = mockSend.mock.calls[0][0].getMessageString();
     expect(nameReplyString).toBe("353 username = #test owner");
