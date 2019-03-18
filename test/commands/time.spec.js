@@ -14,8 +14,7 @@ beforeEach(() => {
 
     const constantDate = new Date("2019-02-13T06:41:20");
 
-    /* eslint no-global-assign:off,no-native-reassign:off*/
-    Date = class extends Date {
+    global.Date = class extends Date {
         constructor() {
             return constantDate
         }
