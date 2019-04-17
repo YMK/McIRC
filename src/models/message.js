@@ -54,10 +54,10 @@ class Message {
 			.withParameter(username)
 			// TODO: Add AWALEN=200 (for AWAY message length) **REQUIRED**
 			.withParameter("CASEMAPPING=ascii")
-			.withParameter("CHANLIMIT=#:")
+			.withParameter(`CHANLIMIT=${config.chanTypes}:`)
 			// TODO: Add CHANMODES=ASDSDGFW (for channel modes) **REQUIRED**
 			.withParameter(`CHANNELLEN=${config.channelLength}`)
-			.withParameter("CHANTYPES=#")
+			.withParameter(`CHANTYPES=${config.chanTypes}`)
 			// TODO: Add ELIST= (for LIST search) **REQUIRED**
 			// TODO: Add EXCEPTS=e (for ban exceptions)
 			// TODO: Add EXTBAN= (for extended ban masks)
@@ -139,6 +139,7 @@ Message.Command = {
 	// Messages
 	ADMIN: "ADMIN",
 	JOIN: "JOIN",
+	MODE: "MODE",
 	MOTD: "MOTD",
 	NAMES: "NAMES",
 	NOTICE: "NOTICE",
@@ -159,6 +160,7 @@ Message.Command = {
 	RPL_CREATED: "003",
 	RPL_MYINFO: "004",
 	RPL_ISUPPORT: "005",
+	RPL_UMODEIS: "221",
 	RPL_ADMINME: "256",
 	RPL_ADMINLOC1: "257",
 	RPL_ADMINLOC2: "258",
@@ -190,7 +192,9 @@ Message.Command = {
 	ERR_NICKNAMEINUSE: "433",
 	ERR_NOTONCHANNEL: "442",
 	ERR_NEEDMOREPARAMS: "461",
-	ERR_BADCHANNELKEY: "475"
+	ERR_BADCHANNELKEY: "475",
+	ERR_UMODEUNKNOWNFLAG: "501",
+	ERR_USERSDONTMATCH: "502"
 };
 
 Message.NumericMessage = {
@@ -210,7 +214,9 @@ Message.NumericMessage = {
 	[Message.Command.ERR_NICKNAMEINUSE]: "Nickname is already in use",
 	[Message.Command.ERR_NOTONCHANNEL]: "You're not on that channel",
 	[Message.Command.ERR_NEEDMOREPARAMS]: "Not enough parameters",
-	[Message.Command.ERR_BADCHANNELKEY]: "Cannot join channel (+k)"
+	[Message.Command.ERR_BADCHANNELKEY]: "Cannot join channel (+k)",
+	[Message.Command.ERR_UMODEUNKNOWNFLAG]: "Unknwon MODE flag",
+	[Message.Command.ERR_USERSDONTMATCH]: "Cant change mode for other users"
 }
 
 module.exports = Message;

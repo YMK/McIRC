@@ -1,6 +1,18 @@
 const Message = require("./message");
+const knownModes = {
+	"i": "invisible",
+	"o": "operator",
+	"O": "localOperator",
+	"r": "registered",
+	"w": "wallops"
+};
+const opModes = {
+	"o": true,
+	"O": true,
+	"r": true
+};
 
-module.exports = class User {
+class User {
 
 	constructor(nick, client, username, hostname, servername, realname) {
 		this.nick = nick;
@@ -11,7 +23,7 @@ module.exports = class User {
 		this.realname = realname;
 		this.channels = [];
 		this.registered = false;
-		this.modes = [];
+		this.modes = {};
 	}
 
 	setClient(client) {
@@ -28,6 +40,32 @@ module.exports = class User {
 
 	getHostMask() {
 		return `${this.nick}!${this.username}@${this.hostname}`;
+	}
+
+	getModes() {
+		return Object.keys(this.modes);
+	}
+
+	setMode(mode) {
+		if (opModes[mode] && !this.isOp()) {
+			return false;
+		}
+		this.modes[mode] = true;
+
+return true;
+	}
+
+	unsetMode(mode) {
+		if (opModes[mode] && !this.isOp()) {
+			return false;
+		}
+		delete this.modes[mode];
+
+return true;
+	}
+
+	isOp() {
+		return this.modes.o || this.modes.O;
 	}
 
 	updateInfo({nick, username, hostname, servername, realname}) {
@@ -57,4 +95,8 @@ module.exports = class User {
 			.build();
 		this.client.sendMessage(message);
 	}
-};
+}
+
+User.knownModes = knownModes;
+
+module.exports = User;
