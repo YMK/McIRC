@@ -68,6 +68,10 @@ return true;
 		return this.modes.o || this.modes.O;
 	}
 
+	isInvisible() {
+		return this.modes.i;
+	}
+
 	updateInfo({nick, username, hostname, servername, realname}) {
 		this.nick = nick || this.nick;
 		this.username = username || this.username;
