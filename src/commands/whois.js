@@ -21,8 +21,14 @@ module.exports = {
 			client.send(Message.makeNumeric(Message.Command.ERR_NOSUCHNICK, [userName], client.getUserNick()));
 		}
 
-		const chanlist = user.getChannels().map((chan) => chan.name).join(" "); // TODO: Filter secret channels and invisible user mode
+		let channels = user.getChannels()
+			// TODO: Filter secret channels
+			.map((chan) => chan.name);
 		// TODO: Add prefixes to channels
+
+		if (user.isInvisible()) {
+			channels = channels.filter((chanName) => client.user.getChannels().some((chan) => chan.name === chanName));
+		}
 
 		client.send(Message.makeNumeric(
 			Message.Command.RPL_WHOISUSER,
@@ -30,7 +36,7 @@ module.exports = {
 			client.getUserNick(),
 			user.realname
 		));
-		client.send(Message.makeNumeric(Message.Command.RPL_WHOISCHANNELS, [user.nick], client.getUserNick(), chanlist));
+		client.send(Message.makeNumeric(Message.Command.RPL_WHOISCHANNELS, [user.nick], client.getUserNick(), channels.join(" ")));
 		client.send(Message.makeNumeric(
 			Message.Command.RPL_WHOISSERVER,
 			[user.nick, config.serverName],
