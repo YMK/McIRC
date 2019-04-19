@@ -1,5 +1,6 @@
 module.exports = [
 	require("./admin"),
+	require("./info"),
 	require("./join"),
 	require("./motd"),
 	require("./nick"),
