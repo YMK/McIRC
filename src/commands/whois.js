@@ -44,7 +44,9 @@ module.exports = {
 			config.serverInfo
 		));
 
-		// TODO: RPL_WHOISOPERATOR
+		if (user.isOp()) {
+			client.send(Message.makeNumeric(Message.Command.RPL_WHOISOPERATOR, [user.nick], client.getUserNick()));
+		}
 
 		// TODO: RPL_WHOISIDLE
 

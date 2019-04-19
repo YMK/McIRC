@@ -199,6 +199,7 @@ Message.Command = {
 
 Message.NumericMessage = {
 	[Message.Command.RPL_ADMINME]: "Administrative info",
+	[Message.Command.RPL_WHOISOPERATOR]: "is an IRC operator",
 	[Message.Command.RPL_ENDOFWHOIS]: "End of /WHOIS list",
 	[Message.Command.RPL_NOTOPIC]: "No topic is set",
 	[Message.Command.RPL_ENDOFNAMES]: "End of /NAMES list",
