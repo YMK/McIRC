@@ -2,7 +2,9 @@ module.exports = [
 	require("./admin"),
 	require("./info"),
 	require("./join"),
+	require("./mode"),
 	require("./motd"),
+	require("./names"),
 	require("./nick"),
 	require("./part"),
 	require("./ping"),
@@ -12,5 +14,6 @@ module.exports = [
 	require("./time"),
 	require("./topic"),
 	require("./user"),
+	require("./version"),
 	require("./whois"),
 ];
