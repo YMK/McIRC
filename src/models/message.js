@@ -138,6 +138,7 @@ class Message {
 Message.Command = {
 	// Messages
 	ADMIN: "ADMIN",
+	ERROR: "ERROR",
 	JOIN: "JOIN",
 	MODE: "MODE",
 	MOTD: "MOTD",
