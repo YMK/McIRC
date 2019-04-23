@@ -19,7 +19,7 @@ module.exports = class McIrc {
             const clientManager = new ClientManager(client);
             client.on("error", (err) => {
                 if (err.code === "ECONNRESET") {
-                    clientManager.disconnected();
+                    clientManager.disconnected("Connection reset");
                 } else {
                     logger.error(err);
                 }

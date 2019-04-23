@@ -15,7 +15,9 @@ module.exports = {
             send: mockSend,
             sendMessage: mockSend,
             sendNotice: mockSend,
-            getUserNick: () => user.nick
+            getUserNick: () => user.nick,
+            connected: true,
+            disconnected: jest.fn()
         }))
     }
 }
