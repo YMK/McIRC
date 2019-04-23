@@ -1,5 +1,6 @@
 module.exports = [
 	require("./admin"),
+	require("./away"),
 	require("./info"),
 	require("./join"),
 	require("./mode"),

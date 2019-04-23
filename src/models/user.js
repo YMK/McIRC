@@ -1,15 +1,17 @@
 const Message = require("./message");
 const knownModes = {
+	"a": "away",
 	"i": "invisible",
 	"o": "operator",
 	"O": "localOperator",
 	"r": "registered",
 	"w": "wallops"
 };
-const opModes = {
-	"o": true,
-	"O": true,
-	"r": true
+const manualModes = {
+	"a": true, // Set using the AWAY command
+	"o": true, // Set using the OPER command
+	"O": true, // Set using the OPER command
+	"r": true // Set by registering with the IRC server
 };
 
 class User {
@@ -47,25 +49,43 @@ class User {
 	}
 
 	setMode(mode) {
-		if (opModes[mode] && !this.isOp()) {
+		if (manualModes[mode]) {
 			return false;
 		}
 		this.modes[mode] = true;
 
-return true;
+		return true;
 	}
 
 	unsetMode(mode) {
-		if (opModes[mode] && !this.isOp()) {
+		if (manualModes[mode]) {
 			return false;
 		}
 		delete this.modes[mode];
 
-return true;
+		return true;
 	}
 
 	isOp() {
 		return this.modes.o || this.modes.O;
+	}
+
+	isAway() {
+		return Boolean(this.modes.a);
+	}
+
+	setAway(reason) {
+		this.modes.a = true;
+		this.awayMessage = reason;
+	}
+
+	setUnAway() {
+		delete this.modes.a;
+		this.awayMessage = "";
+	}
+
+	getAwayMessage() {
+		return this.awayMessage;
 	}
 
 	isInvisible() {

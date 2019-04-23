@@ -1,6 +1,7 @@
 const Message = require("../models/message");
 const state = require("../state");
 const logger = require("../utils/logger")();
+const {config} = require("../configManager");
 
 module.exports = {
 	test: (command) => command === Message.Command.PRIVMSG || command === Message.Command.NOTICE,
@@ -23,6 +24,12 @@ module.exports = {
 			const to = state.get(recipient);
 			if (!to) {
 				return client.send(Message.makeNumeric(Message.Command.ERR_NOSUCHNICK, to, client.user.nick));
+			}
+
+			const isChannel = config.chanTypes.split("").some((type) => recipient.startsWith(type));
+
+			if (!isChannel && to.isAway()) {
+				client.send(Message.makeNumeric(Message.Command.RPL_AWAY, [recipient], client.user.nick, to.getAwayMessage()));
 			}
 
 			logger.debug(`${command} to ${recipient} with ${message}`);
