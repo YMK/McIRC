@@ -52,7 +52,7 @@ class Message {
 		return Message.Builder()
 			.withCommand(Message.Command.RPL_ISUPPORT)
 			.withParameter(username)
-			// TODO: Add AWALEN=200 (for AWAY message length) **REQUIRED**
+			.withParameter("AWALEN=200")
 			.withParameter("CASEMAPPING=ascii")
 			.withParameter(`CHANLIMIT=${config.chanTypes}:`)
 			// TODO: Add CHANMODES=ASDSDGFW (for channel modes) **REQUIRED**
@@ -137,6 +137,7 @@ class Message {
 
 Message.Command = {
 	// Messages
+	AWAY: "AWAY",
 	ADMIN: "ADMIN",
 	ERROR: "ERROR",
 	JOIN: "JOIN",
@@ -166,6 +167,9 @@ Message.Command = {
 	RPL_ADMINLOC1: "257",
 	RPL_ADMINLOC2: "258",
 	RPL_ADMINEMAIL: "259",
+	RPL_AWAY: "301",
+	RPL_UNAWAY: "305",
+	RPL_NOWAWAY: "306",
 	RPL_WHOISUSER: "311",
 	RPL_WHOISSERVER: "312",
 	RPL_WHOISOPERATOR: "313",
@@ -202,6 +206,8 @@ Message.Command = {
 
 Message.NumericMessage = {
 	[Message.Command.RPL_ADMINME]: "Administrative info",
+	[Message.Command.RPL_UNAWAY]: "You are no longer marked as being away",
+	[Message.Command.RPL_NOWAWAY]: "You have been marked as being away",
 	[Message.Command.RPL_WHOISOPERATOR]: "is an IRC operator",
 	[Message.Command.RPL_ENDOFWHOIS]: "End of /WHOIS list",
 	[Message.Command.RPL_NOTOPIC]: "No topic is set",

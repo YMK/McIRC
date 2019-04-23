@@ -73,3 +73,21 @@ test("Sends NOTICE to all users on #test", () => {
 
     expect(mockSend4.mock.calls.length).toBe(0);
 });
+
+test("Sends RPL_AWAY to user when sending a message to an away user", () => {
+    mockClient2.user.modes.a = true;
+    mockClient2.user.awayMessage = "Having dinner";
+    tested.run(mockClient1, {args: ["user2", "Hello"], command: Message.Command.PRIVMSG});
+
+    const messageString = mockSend1.mock.calls[0][0].getMessageString();
+    expect(messageString).toBe("301 user1 user2 :Having dinner");
+});
+
+test("Still sends PRIVMSG to away user", () => {
+    mockClient2.user.modes.a = true;
+    mockClient2.user.awayMessage = "Something";
+    tested.run(mockClient1, {args: ["user2", "Hello"], command: Message.Command.PRIVMSG});
+
+    const privmsg = mockSend2.mock.calls[0][0].getMessageString();
+    expect(privmsg).toBe(":user1 PRIVMSG user2 Hello");
+});
