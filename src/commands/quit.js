@@ -14,10 +14,9 @@ module.exports = {
 			chan.sendMessage(client.user.username, quitMessage);
 		});
 
-		client.sendMessage(Message.Builder().withCommand(Message.Command.ERROR).build());
-
 		if (client.connected) {
-			client.disconnected();
+			client.sendMessage(Message.Builder().withCommand(Message.Command.ERROR).build());
+			client.disconnected(reason);
 		}
 	}
 };

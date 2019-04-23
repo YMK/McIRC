@@ -71,10 +71,10 @@ module.exports = class ClientManager {
 		}
 	}
 
-	disconnected() {
+	disconnected(reason) {
 		this.connected = false;
 		logger.debug(`User ${this.user ? this.user.username : "unknown"} disconnected`);
-		Quit.run(this, {args: ["Ping Timeout"]});
+		Quit.run(this, {args: [reason]});
 		timeout.clearInterval(this.user.username);
 	}
 
