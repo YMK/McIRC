@@ -176,6 +176,7 @@ Message.Command = {
 	RPL_WHOISIDLE: "317",
 	RPL_ENDOFWHOIS: "318",
 	RPL_WHOISCHANNELS: "319",
+	RPL_CHANNELMODEIS: "324",
 	RPL_NOTOPIC: "331",
 	RPL_TOPIC: "332",
 	RPL_TOPICWHOTIME: "333",
@@ -200,6 +201,7 @@ Message.Command = {
 	ERR_NOTONCHANNEL: "442",
 	ERR_NEEDMOREPARAMS: "461",
 	ERR_BADCHANNELKEY: "475",
+	ERR_CHANOPRIVSNEEDED: "482",
 	ERR_UMODEUNKNOWNFLAG: "501",
 	ERR_USERSDONTMATCH: "502"
 };
@@ -226,6 +228,7 @@ Message.NumericMessage = {
 	[Message.Command.ERR_NOTONCHANNEL]: "You're not on that channel",
 	[Message.Command.ERR_NEEDMOREPARAMS]: "Not enough parameters",
 	[Message.Command.ERR_BADCHANNELKEY]: "Cannot join channel (+k)",
+	[Message.Command.ERR_CHANOPRIVSNEEDED]: "You're not channel operator",
 	[Message.Command.ERR_UMODEUNKNOWNFLAG]: "Unknwon MODE flag",
 	[Message.Command.ERR_USERSDONTMATCH]: "Cant change mode for other users"
 }

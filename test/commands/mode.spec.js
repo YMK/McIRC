@@ -1,6 +1,7 @@
 const tested = require("../../src/commands/mode");
 const state = require("../../src/state");
 const user = require("../../src/models/user");
+const Channel = require("../../src/models/channel");
 const utils = require("../utils");
 
 let existingUser, mockClient, mockSend;
@@ -135,6 +136,44 @@ describe("User modes", () => {
 
         const reply = mockSend.mock.calls[0][0].getMessageString();
         expect(reply).toBe("MODE existingUser +i");
+    });
+
+});
+
+
+describe("Channel modes", () => {
+
+    beforeEach(() => {
+        state.channels = {};
+    });
+
+    test("Sends ERR_NOSUCHCHANNEL when there is no channel", () => {
+        expect(state.users).toEqual({existingUser});
+        tested.run(new mockClient(), {args: ["#notAChannel"]});
+
+        const reply = mockSend.mock.calls[0][0].getMessageString();
+        expect(reply).toBe("403 existingUser #notAChannel :No such channel");
+    });
+
+    test("Sends RPL_CHANNELMODEIS when no modestring sent", () => {
+        const existingChan = new Channel("#test", new user("owner", {send: jest.fn()}, "owner", "localhost", "", ""));
+        state.channels = {"#test": existingChan};
+        tested.run(new mockClient(), {args: ["#test"]});
+
+        const reply = mockSend.mock.calls[0][0].getMessageString();
+        expect(reply).toBe("324 existingUser #test ");
+    });
+
+    test.skip("Sends RPL_CHANNELMODEIS with modes when no modestring sent", () => {
+    });
+
+    test("Sends ERR_CHANOPRIVSNEEDED when setting mode on channel that we don't have op for", () => {
+        const existingChan = new Channel("#test", new user("owner", {send: jest.fn()}, "owner", "localhost", "", ""));
+        state.channels = {"#test": existingChan};
+        tested.run(new mockClient(), {args: ["#test", "+I"]});
+
+        const reply = mockSend.mock.calls[0][0].getMessageString();
+        expect(reply).toBe("482 existingUser #test :You're not channel operator");
     });
 
 });

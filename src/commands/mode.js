@@ -16,8 +16,8 @@ module.exports = {
 		const target = isChannel ? state.channels[targetName] : state.users[targetName];
 
 		if (!target) {
-			return client.send(Message.makeNumeric(Message.Command.ERR_NOSUCHNICK, [targetName], client.user.nick));
-			// TODO: ERR_NOSUCHCHANNEL if target is channel
+			const error = isChannel ? Message.Command.ERR_NOSUCHCHANNEL : Message.Command.ERR_NOSUCHNICK;
+			return client.send(Message.makeNumeric(error, [targetName], client.user.nick));
 		}
 
 		if (!isChannel && client.user.nick !== targetName) {
@@ -25,14 +25,22 @@ module.exports = {
 		}
 
 		if (!modestring) {
-			return client.send(Message.makeNumeric(Message.Command.RPL_UMODEIS, [target.getModes().join("")], client.user.nick));
-			// TODO: RPL_CHANNELMODEIS if target is channel
+			const rpl = isChannel ? Message.Command.RPL_CHANNELMODEIS : Message.Command.RPL_UMODEIS;
+			const args = [target.getModes().join("")];
+			if (isChannel) {
+				args.unshift(targetName);
+			}
+			return client.send(Message.makeNumeric(rpl, args, client.user.nick));
 		}
 
 		if (isChannel) {
+			const isOp = true;
+
+			if (!isOp) {
+				return client.send(Message.makeNumeric(Message.Command.ERR_CHANOPRIVSNEEDED, [targetName], client.user.nick));
+			}
 
 			/*
-			 * ERR_CHANOPRIVSNEEDED if user doesn't have channel privileges
 			 * Apply modes to channel
 			 */
 
