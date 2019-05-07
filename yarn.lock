@@ -738,6 +738,10 @@ copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
 
+core-js@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.0.1.tgz#1343182634298f7f38622f95e73f54e48ddf4738"
+
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -1395,7 +1399,7 @@ http-signature@~1.2.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
-iconv-lite@0.4.24, iconv-lite@^0.4.11, iconv-lite@^0.4.24, iconv-lite@^0.4.4:
+iconv-lite@0.4.24, iconv-lite@^0.4.24, iconv-lite@^0.4.4:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
   dependencies:
@@ -1480,15 +1484,16 @@ ipaddr.js@0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-0.1.3.tgz#27a9ca37f148d2102b0ef191ccbf2c51a8f025c6"
 
-irc-framework@4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/irc-framework/-/irc-framework-4.2.0.tgz#74d3ea9a93a90f74ef3e3da23cc2ca2834f3e96f"
+irc-framework@4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/irc-framework/-/irc-framework-4.3.0.tgz#9c40f1a2eac565d1fae1650e93d10b08df9c783e"
   dependencies:
+    core-js "^3.0.1"
     eventemitter3 "^2.0.2"
-    iconv-lite "^0.4.11"
-    lodash "^4.17.4"
+    iconv-lite "^0.4.24"
+    lodash "^4.17.11"
     middleware-handler "^0.2.0"
-    runes "^0.4.3"
+    runes "github:kiwiirc/runes"
     socksjs "^0.5.0"
 
 is-accessor-descriptor@^0.1.6:
@@ -2167,7 +2172,7 @@ lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
 
-lodash@^4.17.11, lodash@^4.17.4:
+lodash@^4.17.11:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
@@ -2891,9 +2896,10 @@ run-async@^2.2.0:
   dependencies:
     is-promise "^2.1.0"
 
-runes@^0.4.3:
+"runes@github:kiwiirc/runes":
   version "0.4.3"
-  resolved "https://registry.yarnpkg.com/runes/-/runes-0.4.3.tgz#32f7738844bc767b65cc68171528e3373c7bb355"
+  uid "172b21bf5b103221bd6c4409f0371076edc0c7e4"
+  resolved "https://codeload.github.com/kiwiirc/runes/tar.gz/172b21bf5b103221bd6c4409f0371076edc0c7e4"
 
 rxjs@^6.4.0:
   version "6.4.0"
