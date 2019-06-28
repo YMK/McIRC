@@ -1172,6 +1172,10 @@ fast-safe-stringify@^2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.6.tgz#04b26106cc56681f51a044cfc0d76cf0008ac2c2"
 
+fast-text-encoding@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/fast-text-encoding/-/fast-text-encoding-1.0.0.tgz#3e5ce8293409cfaa7177a71b9ca84e1b1e6f25ef"
+
 fb-watchman@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/fb-watchman/-/fb-watchman-2.0.0.tgz#54e9abf7dfa2f26cd9b1636c588c1afc05de5d58"
@@ -1326,6 +1330,10 @@ globals@^11.1.0, globals@^11.7.0:
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2:
   version "4.1.15"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
+
+grapheme-splitter@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/grapheme-splitter/-/grapheme-splitter-1.0.4.tgz#9cf3a665c6247479896834af35cf1dbb4400767e"
 
 growly@^1.3.0:
   version "1.3.0"
@@ -1500,16 +1508,18 @@ ipaddr.js@0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-0.1.3.tgz#27a9ca37f148d2102b0ef191ccbf2c51a8f025c6"
 
-irc-framework@4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/irc-framework/-/irc-framework-4.3.0.tgz#9c40f1a2eac565d1fae1650e93d10b08df9c783e"
+irc-framework@4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/irc-framework/-/irc-framework-4.4.0.tgz#ab0c16ab293f092d4d450d76dae8d0c3181e436f"
   dependencies:
     core-js "^3.0.1"
     eventemitter3 "^2.0.2"
+    grapheme-splitter "^1.0.4"
     iconv-lite "^0.4.24"
+    isomorphic-textencoder "^1.0.1"
     lodash "^4.17.11"
     middleware-handler "^0.2.0"
-    runes "github:kiwiirc/runes"
+    regenerator-runtime "^0.13.2"
     socksjs "^0.5.0"
 
 is-accessor-descriptor@^0.1.6:
@@ -1679,6 +1689,12 @@ isobject@^2.0.0:
 isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
+
+isomorphic-textencoder@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/isomorphic-textencoder/-/isomorphic-textencoder-1.0.1.tgz#38dcd3b4416d29cd33e274f64b99ae567cd15e83"
+  dependencies:
+    fast-text-encoding "^1.0.0"
 
 isstream@~0.1.2:
   version "0.1.2"
@@ -2801,6 +2817,10 @@ realpath-native@^1.1.0:
   dependencies:
     util.promisify "^1.0.0"
 
+regenerator-runtime@^0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
+
 regex-not@^1.0.0, regex-not@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/regex-not/-/regex-not-1.0.2.tgz#1f4ece27e00b0b65e0247a6810e6a85d83a5752c"
@@ -2931,11 +2951,6 @@ run-async@^2.2.0:
   resolved "https://registry.yarnpkg.com/run-async/-/run-async-2.3.0.tgz#0371ab4ae0bdd720d4166d7dfda64ff7a445a6c0"
   dependencies:
     is-promise "^2.1.0"
-
-"runes@github:kiwiirc/runes":
-  version "0.4.3"
-  uid "172b21bf5b103221bd6c4409f0371076edc0c7e4"
-  resolved "https://codeload.github.com/kiwiirc/runes/tar.gz/172b21bf5b103221bd6c4409f0371076edc0c7e4"
 
 rxjs@^6.4.0:
   version "6.4.0"
