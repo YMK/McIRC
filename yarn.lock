@@ -3387,9 +3387,9 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
-tekko@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/tekko/-/tekko-1.0.0.tgz#98420fe0c42a9fd4bb8df4cf2a89247d404f7274"
+tekko@^2.0.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/tekko/-/tekko-2.3.0.tgz#5d2565aa01f854537623063b7da770e76434da63"
 
 test-exclude@^5.0.0:
   version "5.1.0"
