@@ -48,7 +48,7 @@ describe("User modes", () => {
         tested.run(new mockClient(), {args: ["existingUser"]});
 
         const reply = mockSend.mock.calls[0][0].getMessageString();
-        expect(reply).toBe("221 existingUser i");
+        expect(reply).toBe("221 existingUser :i");
     });
 
     test("Sets mode when provided with modestring starting with +", () => {
@@ -58,7 +58,7 @@ describe("User modes", () => {
         expect(state.users[existingUser.username].getModes()).toContain("i");
 
         const reply = mockSend.mock.calls[0][0].getMessageString();
-        expect(reply).toBe("MODE existingUser +i");
+        expect(reply).toBe("MODE existingUser :+i");
     });
 
     test("Sets all supplied modse when provided with modestring starting with +", () => {
@@ -69,7 +69,7 @@ describe("User modes", () => {
         expect(state.users[existingUser.username].getModes()).toContain("w");
 
         const reply = mockSend.mock.calls[0][0].getMessageString();
-        expect(reply).toBe("MODE existingUser +iw");
+        expect(reply).toBe("MODE existingUser :+iw");
     });
 
     test("Sends ERR_UMODEUNKNOWNFLAG when setting an unknown mode, but still sets that mode", () => {
@@ -83,7 +83,7 @@ describe("User modes", () => {
         expect(unknownReply).toBe("501 existingUser :Unknwon MODE flag");
 
         const reply = mockSend.mock.calls[1][0].getMessageString();
-        expect(reply).toBe("MODE existingUser +iz");
+        expect(reply).toBe("MODE existingUser :+iz");
     });
 
     test("Removes mode when provided with modestring starting with -", () => {
@@ -94,7 +94,7 @@ describe("User modes", () => {
         expect(state.users[existingUser.username].getModes()).not.toContain("i");
 
         const reply = mockSend.mock.calls[0][0].getMessageString();
-        expect(reply).toBe("MODE existingUser -i");
+        expect(reply).toBe("MODE existingUser :-i");
     });
 
     test("Removes all supplied modse when provided with modestring starting with -", () => {
@@ -107,7 +107,7 @@ describe("User modes", () => {
         expect(state.users[existingUser.username].getModes()).not.toContain("w");
 
         const reply = mockSend.mock.calls[0][0].getMessageString();
-        expect(reply).toBe("MODE existingUser -iw");
+        expect(reply).toBe("MODE existingUser :-iw");
     });
 
     test("Sends ERR_UMODEUNKNOWNFLAG when removing an unknown mode, but still unsets that mode", () => {
@@ -123,7 +123,7 @@ describe("User modes", () => {
         expect(unknownReply).toBe("501 existingUser :Unknwon MODE flag");
 
         const reply = mockSend.mock.calls[1][0].getMessageString();
-        expect(reply).toBe("MODE existingUser -iz");
+        expect(reply).toBe("MODE existingUser :-iz");
     });
 
     test("Ignores when setting an op only mode", () => {
@@ -134,7 +134,7 @@ describe("User modes", () => {
         expect(state.users[existingUser.username].getModes()).not.toContain("o");
 
         const reply = mockSend.mock.calls[0][0].getMessageString();
-        expect(reply).toBe("MODE existingUser +i");
+        expect(reply).toBe("MODE existingUser :+i");
     });
 
 });

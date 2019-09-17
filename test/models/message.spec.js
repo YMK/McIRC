@@ -7,7 +7,7 @@ test("Creates message string properly", () => {
 
 test("Creates message string with parameters", () => {
 	const message = new tested("JOIN", ["#thelounge"]);
-	expect(message.getMessageString()).toBe("JOIN #thelounge");
+	expect(message.getMessageString()).toBe("JOIN :#thelounge");
 });
 
 test("Builder exists", () => {

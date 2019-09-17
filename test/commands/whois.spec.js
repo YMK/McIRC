@@ -94,7 +94,7 @@ test("Hides channels for +i user if the other user isn't in the same channel", (
     expect(nameReplyString).toBe("311 username user2 user2 localhost * :Real Name");
 
     const endOfNamesString = mockSend.mock.calls[1][0].getMessageString();
-    expect(endOfNamesString).toBe("319 username user2 #chan1");
+    expect(endOfNamesString).toBe("319 username user2 :#chan1");
 
     const endOfNamesString2 = mockSend.mock.calls[2][0].getMessageString();
     expect(endOfNamesString2).toBe("312 username user2 mcirc.yamanickill.com :Default Server Info");
