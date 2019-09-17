@@ -53,5 +53,5 @@ test("Sends RPL_ADMINEMAIL", () => {
     tested.run(new mockClient());
 
     const reply = mockSend.mock.calls[3][0].getMessageString();
-    expect(reply).toBe("259 username email@domain.com");
+    expect(reply).toBe("259 username :email@domain.com");
 });
