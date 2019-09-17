@@ -51,7 +51,7 @@ const client1 = makeClient(),
 const checkRegistration = async function () {
     client1.write(format({command: "NICK", params: ["McInkay"]}));
     client1.write("\r\n");
-    client1.write(format({command: "USER", params: ["McInkay", "localhost", "*"], trailing: "Real name of user"}));
+    client1.write(format({command: "USER", params: ["McInkay", "localhost", "*", "Real name of user"]}));
     client1.write("\r\n");
 
     const responses = await client1.waitForResponses(5);
@@ -82,7 +82,7 @@ const checkSendingMessages = async function () {
 
     client2.write(format({command: "NICK", params: ["User2"]}));
     client2.write("\r\n");
-    client2.write(format({command: "USER", params: ["User2", "localhost", "*"], trailing: "Real name of user"}));
+    client2.write(format({command: "USER", params: ["User2", "localhost", "*", "Real name of user"]}));
     client2.write("\r\n");
     await client2.waitForResponses(5);
 
@@ -91,40 +91,40 @@ const checkSendingMessages = async function () {
 
     await client1.waitForResponses(1); // Clear out client1 buffer
 
-    client2.write(format({command: "PRIVMSG", params: ["#test"], trailing: "Hey there"}));
+    client2.write(format({command: "PRIVMSG", params: ["#test", "Hey there"]}));
     const client1Responses = await client1.waitForResponses(1);
     assert(client1Responses.length === 1);
     const client1Message = parse(client1Responses.shift());
     assert(client1Message.command === "PRIVMSG");
-    assert(client1Message.trailing === "Hey there");
+    assert(client1Message.params[1] === "Hey there");
     assert(client1Message.prefix.name === "User2");
 
-    client1.write(format({command: "PRIVMSG", params: ["#test"], trailing: "How's it going?"}));
+    client1.write(format({command: "PRIVMSG", params: ["#test", "How's it going?"]}));
     const client2Responses = await client2.waitForResponses(1);
     assert(client2Responses.length === 1);
     const client2Message = parse(client2Responses.shift());
     assert(client2Message.command === "PRIVMSG");
-    assert(client2Message.trailing === "How's it going?");
+    assert(client2Message.params[1] === "How's it going?");
     assert(client2Message.prefix.name === "McInkay");
 
     logger.info("Sending messages works correctly");
 }
 
 const checkSendingNotices = async function () {
-    client2.write(format({command: "NOTICE", params: ["#test"], trailing: "Hey there"}));
+    client2.write(format({command: "NOTICE", params: ["#test", "Hey there"]}));
     const client1Responses = await client1.waitForResponses(1);
     assert(client1Responses.length === 1);
     const client1Message = parse(client1Responses.shift());
     assert(client1Message.command === "NOTICE");
-    assert(client1Message.trailing === "Hey there");
+    assert(client1Message.params[1] === "Hey there");
     assert(client1Message.prefix.name === "User2");
 
-    client1.write(format({command: "NOTICE", params: ["#test"], trailing: "How's it going?"}));
+    client1.write(format({command: "NOTICE", params: ["#test", "How's it going?"]}));
     const client2Responses = await client2.waitForResponses(1);
     assert(client2Responses.length === 1);
     const client2Message = parse(client2Responses.shift());
     assert(client2Message.command === "NOTICE");
-    assert(client2Message.trailing === "How's it going?");
+    assert(client2Message.params[1] === "How's it going?");
     assert(client2Message.prefix.name === "McInkay");
 
     logger.info("Sending notices works correctly");
