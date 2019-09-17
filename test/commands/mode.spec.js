@@ -39,7 +39,7 @@ describe("User modes", () => {
         tested.run(new mockClient(), {args: ["existingUser"]});
 
         const reply = mockSend.mock.calls[0][0].getMessageString();
-        expect(reply).toBe("221 existingUser ");
+        expect(reply).toBe("221 existingUser");
     });
 
     test("Sends RPL_UMODIS with modes when no modestring sent", () => {

@@ -10,14 +10,8 @@ class Message {
 
 		// TODO: Limit to 15
 		this.parameters = parameters || [];
-		this.parameters
-			.map((parameter) => parameter || "")
-			.forEach((parameter, index) => {
-			if (parameter.includes(" ") && (index !== this.parameters.length - 1 || trailing)) {
-				throw new Error("Only final parameter can include spaces");
-			}
-		});
-		this.trailing = trailing;
+		this.parameters.push(trailing);
+		this.parameters = this.parameters.filter((param) => param !== undefined);
 	}
 
 	getMessageString() {
@@ -25,19 +19,9 @@ class Message {
 
 		// TODO: add tags
 
-		let params = this.parameters;
-		let lastParam;
-		if (params && params.length > 0 && params[params.length - 1] && params[params.length - 1].includes(" ")) {
-			lastParam = params[params.length - 1];
-			params = params.slice(0, -1);
-		} else if (this.trailing) {
-			lastParam = this.trailing;
-		}
-
 		const formatParams = {
 			command: this.command,
-			params: params,
-			trailing: lastParam
+			params: this.parameters
 		};
 
 		if (this.source) {
@@ -102,13 +86,11 @@ class Message {
 		const parsed = parse(string);
 		const source = parsed.prefix && parsed.prefix.name ? parsed.prefix.name : user;
 
-		return new Message(parsed.command, parsed.params.concat(parsed.trailing), source);
+		return new Message(parsed.command, parsed.params, source);
 	}
 
 	static Builder() {
 		return new class Builder {
-			// TODO: fromString(commandstring) {
-
 			withCommand(command) {
 				this.command = command;
 

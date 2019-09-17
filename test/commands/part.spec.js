@@ -49,7 +49,7 @@ test("Sends part message to user", () => {
     tested.run(new mockClient(), {args: ["#test"]});
 
     const messageString = mockSend.mock.calls[0][0].getMessageString();
-    expect(messageString).toBe(":user1!user1@localhost PART #test ");
+    expect(messageString).toBe(":user1!user1@localhost PART #test");
 });
 
 test("Includes reason in part message", () => {
@@ -66,5 +66,5 @@ test("Sends part message to other users in channel", () => {
     tested.run(new mockClient(), {args: ["#test"]});
 
     const messageString = user2Send.mock.calls[0][0].getMessageString();
-    expect(messageString).toBe(":user1!user1@localhost PART #test ");
+    expect(messageString).toBe(":user1!user1@localhost PART #test");
 });
