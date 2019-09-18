@@ -123,6 +123,7 @@ Message.Command = {
 	ADMIN: "ADMIN",
 	ERROR: "ERROR",
 	JOIN: "JOIN",
+	KILL: "KILL",
 	MODE: "MODE",
 	MOTD: "MOTD",
 	NAMES: "NAMES",
@@ -183,7 +184,8 @@ Message.Command = {
 	ERR_NEEDMOREPARAMS: "461",
 	ERR_BADCHANNELKEY: "475",
 	ERR_UMODEUNKNOWNFLAG: "501",
-	ERR_USERSDONTMATCH: "502"
+	ERR_USERSDONTMATCH: "502",
+	ERR_NOPRIVS: "723"
 };
 
 Message.NumericMessage = {
@@ -209,7 +211,8 @@ Message.NumericMessage = {
 	[Message.Command.ERR_NEEDMOREPARAMS]: "Not enough parameters",
 	[Message.Command.ERR_BADCHANNELKEY]: "Cannot join channel (+k)",
 	[Message.Command.ERR_UMODEUNKNOWNFLAG]: "Unknwon MODE flag",
-	[Message.Command.ERR_USERSDONTMATCH]: "Cant change mode for other users"
+	[Message.Command.ERR_USERSDONTMATCH]: "Cant change mode for other users",
+	[Message.Command.ERR_NOPRIVS]: "Insufficient oper privileges."
 }
 
 module.exports = Message;
