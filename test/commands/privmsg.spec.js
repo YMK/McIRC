@@ -29,7 +29,7 @@ test("Sends PRIVMSG to user2", () => {
     tested.run(mockClient1, {args: ["user2", "Hello"], command: Message.Command.PRIVMSG});
 
     const privmsg = mockSend2.mock.calls[0][0].getMessageString();
-    expect(privmsg).toBe(":user1 PRIVMSG user2 :Hello");
+    expect(privmsg).toBe(":user1 PRIVMSG user2 Hello");
 });
 
 test("Doesn't send PRIVMSG to user3", () => {
@@ -44,10 +44,10 @@ test("Sends PRIVMSG to all users on #test", () => {
     tested.run(mockClient1, {args: ["#test", "Hello"], command: Message.Command.PRIVMSG});
 
     const privmsg1 = mockSend2.mock.calls[0][0].getMessageString();
-    expect(privmsg1).toBe(":user1 PRIVMSG #test :Hello");
+    expect(privmsg1).toBe(":user1 PRIVMSG #test Hello");
 
     const privmsg2 = mockSend3.mock.calls[0][0].getMessageString();
-    expect(privmsg2).toBe(":user1 PRIVMSG #test :Hello");
+    expect(privmsg2).toBe(":user1 PRIVMSG #test Hello");
 
     expect(mockSend4.mock.calls.length).toBe(0);
     expect(mockSend1.mock.calls.length).toBe(0);
@@ -57,7 +57,7 @@ test("Sends NOTICE to user2", () => {
     tested.run(mockClient1, {args: ["user2", "Hello"], command: Message.Command.NOTICE});
 
     const notice = mockSend2.mock.calls[0][0].getMessageString();
-    expect(notice).toBe(":user1 NOTICE user2 :Hello");
+    expect(notice).toBe(":user1 NOTICE user2 Hello");
 });
 
 test("Sends NOTICE to all users on #test", () => {
@@ -66,10 +66,10 @@ test("Sends NOTICE to all users on #test", () => {
     tested.run(mockClient1, {args: ["#test", "Hello"], command: Message.Command.NOTICE});
 
     const privmsg1 = mockSend2.mock.calls[0][0].getMessageString();
-    expect(privmsg1).toBe(":user1 NOTICE #test :Hello");
+    expect(privmsg1).toBe(":user1 NOTICE #test Hello");
 
     const privmsg2 = mockSend3.mock.calls[0][0].getMessageString();
-    expect(privmsg2).toBe(":user1 NOTICE #test :Hello");
+    expect(privmsg2).toBe(":user1 NOTICE #test Hello");
 
     expect(mockSend4.mock.calls.length).toBe(0);
 });
@@ -89,5 +89,5 @@ test("Still sends PRIVMSG to away user", () => {
     tested.run(mockClient1, {args: ["user2", "Hello"], command: Message.Command.PRIVMSG});
 
     const privmsg = mockSend2.mock.calls[0][0].getMessageString();
-    expect(privmsg).toBe(":user1 PRIVMSG user2 :Hello");
+    expect(privmsg).toBe(":user1 PRIVMSG user2 Hello");
 });

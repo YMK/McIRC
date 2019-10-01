@@ -66,7 +66,7 @@ describe("Getting TOPIC", () => {
         });
 
         test("Sends RPL_TOPICWHOTIME ", () => {
-            expect(mockSend.mock.calls[1][0].getMessageString()).toBe("333 username #channel userWhoSetTheTopic :1541072832");
+            expect(mockSend.mock.calls[1][0].getMessageString()).toBe("333 username #channel userWhoSetTheTopic 1541072832");
         });
     });
 });
