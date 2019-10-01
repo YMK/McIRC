@@ -25,5 +25,5 @@ test("Sends RPL_TIME", () => {
     tested.run(new mockClient());
 
     const nomotdReply = mockSend.mock.calls[0][0].getMessageString();
-    expect(nomotdReply).toBe("391 username mcirc.yamanickill.com :2019-02-13T06:41:20.000Z");
+    expect(nomotdReply).toBe("391 username mcirc.yamanickill.com 2019-02-13T06:41:20.000Z");
 });

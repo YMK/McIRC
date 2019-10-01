@@ -23,7 +23,7 @@ test("Sends names to user's client", () => {
     tested.run(new mockClient(), {args: [chanlist]});
 
     const nameReplyString = mockSend.mock.calls[0][0].getMessageString();
-    expect(nameReplyString).toBe("353 username = #test :owner");
+    expect(nameReplyString).toBe("353 username = #test owner");
 
     const endOfNamesString = mockSend.mock.calls[1][0].getMessageString();
     expect(endOfNamesString).toBe("366 username #test :End of /NAMES list");

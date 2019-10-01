@@ -19,11 +19,14 @@ module.exports = {
 				return client.send(Message.makeNumeric(Message.Command.ERR_NOTONCHANNEL, chan, client.user.nick));
 			}
 
-			const partMessage = Message.Builder()
+			let builder = Message.Builder()
 				.withSource(client.user.getHostMask())
 				.withCommand(Message.Command.PART)
-				.withParameter(chan)
-				.withParameter(reason || "")
+				.withParameter(chan);
+			if (reason && reason !== "") {
+				builder = builder.withParameter(reason || "");
+			}
+			const partMessage = builder
 				.build();
 
 			to.sendMessage(null, partMessage);
