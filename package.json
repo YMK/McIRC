@@ -18,7 +18,7 @@
     "test:integration": "node test/integration.js"
   },
   "devDependencies": {
-    "eslint": "7.26.0",
+    "eslint": "7.27.0",
     "eslint-plugin-jest": "24.3.6",
     "eslint-plugin-node": "11.1.0",
     "irc-framework": "4.10.0",
