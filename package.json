@@ -21,7 +21,7 @@
     "eslint": "7.29.0",
     "eslint-plugin-jest": "24.3.6",
     "eslint-plugin-node": "11.1.0",
-    "irc-framework": "4.10.0",
+    "irc-framework": "4.11.0",
     "jest": "27.0.5",
     "stream-replace": "1.0.0"
   },
