@@ -1406,10 +1406,10 @@ convert-source-map@^1.6.0, convert-source-map@^1.7.0:
   dependencies:
     safe-buffer "~5.1.1"
 
-core-js@^3.15.1:
-  version "3.15.1"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.15.1.tgz#6c08ab88abdf56545045ccf5fd81f47f407e7f1a"
-  integrity sha512-h8VbZYnc9pDzueiS2610IULDkpFFPunHwIpl8yRwFahAEEdSpHlTy3h3z3rKq5h11CaUdBEeRViu9AYvbxiMeg==
+core-js@^3.19.1:
+  version "3.19.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.19.1.tgz#f6f173cae23e73a7d88fa23b6e9da329276c6641"
+  integrity sha512-Tnc7E9iKd/b/ff7GFbhwPVzJzPztGrChB8X8GLqoYGdEOG8IpLnK1xPyo3ZoO3HsK6TodJS58VGPOxA+hLHQMg==
 
 core-util-is@~1.0.0:
   version "1.0.2"
@@ -2211,20 +2211,20 @@ ip@^1.1.5:
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
   integrity sha1-vd7XARQpCCjAoDnnLvJfWq7ENUo=
 
-irc-framework@4.11.0:
-  version "4.11.0"
-  resolved "https://registry.yarnpkg.com/irc-framework/-/irc-framework-4.11.0.tgz#409e6423680c16d6631c83af4ecef82cb105dc49"
-  integrity sha512-A7AoNxAGzViARQv4sVchmTzRiWiQZMCuQVnCOhrggEgAMsc8Vr345U5/JMN5I45gqL4LVfjtruWokp5YiU23Iw==
+irc-framework@4.12.0:
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/irc-framework/-/irc-framework-4.12.0.tgz#ca18c573eea702bd53314e7738096b37895338ba"
+  integrity sha512-gy/zLH5nRWHGiIf3idx8NKE7tEVaLLtCuRstSOh7hVEdvnT4i+9b7zVbB2ZiXhGPPVUZ/898fZ4OEv0FytD1NQ==
   dependencies:
     buffer "^6.0.3"
-    core-js "^3.15.1"
+    core-js "^3.19.1"
     eventemitter3 "^4.0.7"
     grapheme-splitter "^1.0.4"
     iconv-lite "^0.6.3"
     isomorphic-textencoder "^1.0.1"
     lodash "^4.17.21"
     middleware-handler "^0.2.0"
-    regenerator-runtime "^0.13.7"
+    regenerator-runtime "^0.13.9"
     socks "^2.6.1"
     stream-browserify "^3.0.0"
     util "^0.12.4"
@@ -3310,10 +3310,10 @@ readable-stream@^3.4.0, readable-stream@^3.5.0:
     string_decoder "^1.1.1"
     util-deprecate "^1.0.1"
 
-regenerator-runtime@^0.13.7:
-  version "0.13.7"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
-  integrity sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==
+regenerator-runtime@^0.13.9:
+  version "0.13.9"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
+  integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
 
 regexpp@^3.0.0:
   version "3.0.0"
