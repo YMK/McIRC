@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "tekko": "2.4.0",
-    "winston": "3.3.3"
+    "winston": "3.3.4"
   }
 }
