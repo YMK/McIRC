@@ -1,11 +1,11 @@
 {
-  "extends": [
-    "config:base"
-  ],
-  "assignees": ["McInkay"],
-  "schedule": ["after 6am and before 4pm on every weekday"],
-  "automerge": true,
-  "major": {
-    "automerge": false
-  }
+	"extends": [
+		"config:base"
+	],
+	"assignees": ["AlMcKinlay"],
+	"schedule": ["after 6am and before 4pm on every weekday"],
+	"automerge": true,
+	"major": {
+		"automerge": false
+	}
 }
